@@ -6,9 +6,9 @@ using namespace std;
 double BarDiameter(int);
 double BarArea(int);
 
-vector <double> EPSILON(6);
+;
 
-double Moment(double bwbeff, double h, double hf, double ln, double fc, double fy, double cc, double Stirrup, int MainRein, int MainReinCount, int TorsionBar, int HorizontalTorsionBarCount, int MainReinLayers, bool Ei) {
+double Moment(double bwbeff, double h, double hf, double ln, double fc, double fy, double cc, double Stirrup, int MainRein, int MainReinCount, int TorsionBar, int HorizontalTorsionBarCount, int MainReinLayers, bool Ei, vector <double> &EPSILON) {
 	double UpperBound = 0, LowerBound = h, CompressiveStressZone = h / 2, Ec = 29000000;
 	double EpsilonY = fy / Ec;
 	double Beta = 0.85 - 0.05 * ((fc - 4000) / 1000);
@@ -86,7 +86,7 @@ double Moment(double bwbeff, double h, double hf, double ln, double fc, double f
 	return -Moment;
 }
 
-double ReductionFactorMforOther(int MainReinLayers, double fy) {
+double ReductionFactorMforOther(int MainReinLayers, double fy, vector <double> &EPSILON) {
 	if (abs(EPSILON[MainReinLayers - 1]) <= fy / 29000000) {
 		return 0.65;
 	}
@@ -94,11 +94,11 @@ double ReductionFactorMforOther(int MainReinLayers, double fy) {
 		return 0.9;
 	}
 	else {
-		return 0.65 + (abs(EPSILON[MainReinLayers - 1]) - (3 / 1450)) * (0.25 / 0.003);
+		return 0.65 + (abs(EPSILON[MainReinLayers - 1]) - (3. / 1450)) * (0.25 / 0.003);
 	}
 }
 
-double ReductionFactorMforSpiral(int MainReinLayers, double fy) {
+double ReductionFactorMforSpiral(int MainReinLayers, double fy, vector <double>& EPSILON) {
 	if (abs(EPSILON[MainReinLayers - 1]) <= fy / 29000000) {
 		return 0.75;
 	}
@@ -106,6 +106,6 @@ double ReductionFactorMforSpiral(int MainReinLayers, double fy) {
 		return 0.9;
 	}
 	else {
-		return 0.75 + (abs(EPSILON[MainReinLayers - 1]) - (3 / 1450)) * (0.15 / 0.003);
+		return 0.75 + (abs(EPSILON[MainReinLayers - 1]) - (3. / 1450)) * (0.15 / 0.003);
 	}
 }
