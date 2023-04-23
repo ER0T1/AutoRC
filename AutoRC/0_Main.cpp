@@ -8,7 +8,7 @@ using namespace std;
 double AsMinValue(double, double, double, double);
 double AsMaxValue(double, double, double);
 double Beff(double, double, double, double, bool);
-double Moment(double, double, double, double, double, double, double, double, int, int, int, int, int, bool, vector <double>&);
+double Moment(double, double, double, double, double, double, double, double, int, int, int, int, int, int, bool, vector <double>&, double&);
 double ReductionFactorMforOther(int, double, vector <double>&);
 double ReductionFactorMforSpiral(int, double, vector <double>&);
 
@@ -187,53 +187,55 @@ int main() {
 					MainReinCountUperLimit = min({ HorizontalMainReinCount, MainReinCountUperLimit });
 
 					// °tµ¬
-					for (int MainReinLayers = 2; MainReinLayers <= 6; MainReinLayers += 2) {
+					for (int MainReinLayers = 2; MainReinLayers <= 6; MainReinLayers += 1) {
 						for (int MainReinCount = MainReinCountLowerLimit; MainReinCount <= MainReinCountUperLimit; MainReinCount++) {
+							for (int count = 0; count <= MainReinCount; count += 2) {
 
-							vector <double> EPSILON(6);
-							auto beff = Beff(bw, Sw, hf, ln, WingWidthType);
-							auto Mn1 = Moment(beff, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, false, EPSILON);
-							auto Mn2 = -Moment(bw, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, false, EPSILON);
-							
-							double ReductionFactorM;
-							if (Si == true) {
-								ReductionFactorM = ReductionFactorMforSpiral(MainReinLayers, fy, EPSILON);
+								vector <double> EPSILON(6);
+								double COMPRESSIVESTRESSZONE;
+								auto beff = Beff(bw, Sw, hf, ln, WingWidthType);
+								auto Mn1 = Moment(beff, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, count, false, EPSILON, COMPRESSIVESTRESSZONE);
+								auto Mn2 = -Moment(bw, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, count, false, EPSILON, COMPRESSIVESTRESSZONE);
+
+								double ReductionFactorM;
+								if (Si == true) {
+									ReductionFactorM = ReductionFactorMforSpiral(MainReinLayers, fy, EPSILON);
+								}
+								else {
+									ReductionFactorM = ReductionFactorMforOther(MainReinLayers, fy, EPSILON);
+								}
+
+								auto ReduceMn1 = ReductionFactorM * Mn1 * Lbin2Kft;
+								auto ReduceMn2 = ReductionFactorM * Mn2 * Lbin2Kft;
+
+								/*auto Mpr1 = Moment(bw, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, Ei);
+								auto Mpr2 = Moment(beff, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, Ei);
+								auto Ve = (Mpr1 + Mpr2) / 2;*/
+
+
+								if (ReduceMn1 < Mu1 || ReduceMn2 > Mu2) {
+									continue;
+								}
+
+
+								// Is the section large enough?
+								// Stirrup for shear
+								// Stirrup for torsion
+								// Design stirrup for shear & torsion
+								// Check spacing
+								// Design for longtitudinal reinforcement
+								cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
+								cout << "Clear Cover = " << cc << endl;
+								cout << "Main Rein = #" << MainRein << ", Main Rein Count = " << MainReinCount * MainReinLayers << ", The Count of Each Layer = " << MainReinCount << ", Count of Layers = " << MainReinLayers << endl;
+								cout << "Stirrup = #" << Stirrup << endl;
+								cout << "TorsionBar = #" << TorsionBar << ", Torsion Bar Count = " << 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount - 2) << ", Horizontal Torsion Bar Count = " << HorizontalTorsionBarCount << ", Vertical Torsion Bar Count = " << VerticalTorsionBarCount << endl;
+								cout << "Mu+ = " << Mu1 << " k-ft, Mu- = " << Mu2 << " k-ft, Vu = " << Vu << ", Tu = " << Tu << endl;
+								cout << "£pMn+ = " << ReduceMn1 << " k-ft, £pMn- = " << ReduceMn2 << " k-ft, £pVn = " << 0.7 * Vu << ", £pTn = " << 0.7 * Tu << endl << endl;
+								/*cout << "£pMn+ = " << Mn1 / 12000 << " k-ft, £pMn- = " << Mn2 / 12000 << " k-ft, £pVn = " << 0.7 * Vu << ", £pTn = " << 0.7 * Tu << endl << endl;*/
+
 							}
-							else {
-								ReductionFactorM = ReductionFactorMforOther(MainReinLayers, fy, EPSILON);
-							}
-
-							auto ReduceMn1 = ReductionFactorM * Mn1 * Lbin2Kft;
-							auto ReduceMn2 = ReductionFactorM * Mn2 * Lbin2Kft;
-
-							/*auto Mpr1 = Moment(bw, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, Ei);
-							auto Mpr2 = Moment(beff, h, hf, ln, fc, fy, cc, Stirrup, MainRein, MainReinCount, TorsionBar, HorizontalTorsionBarCount, MainReinLayers, Ei);
-							auto Ve = (Mpr1 + Mpr2) / 2;*/
-
-
-							if (abs(ReduceMn1) < abs(Mu1) || abs(ReduceMn2) < abs(Mu2)) {
-								continue;
-							}
-
-
-							// Is the section large enough?
-							// Stirrup for shear
-							// Stirrup for torsion
-							// Design stirrup for shear & torsion
-							// Check spacing
-							// Design for longtitudinal reinforcement
-							cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-							cout << "Clear Cover = " << cc << endl;
-							cout << "Main Rein = #" << MainRein << ", Main Rein Count = " << MainReinCount * MainReinLayers << ", The Count of Each Layer = " << MainReinCount << ", Count of Layers = " << MainReinLayers << endl;
-							cout << "Stirrup = #" << Stirrup << endl;
-							cout << "TorsionBar = #" << TorsionBar << ", Torsion Bar Count = " << 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount - 2) << ", Horizontal Torsion Bar Count = " << HorizontalTorsionBarCount << ", Vertical Torsion Bar Count = " << VerticalTorsionBarCount << endl;
-							cout << "Mu+ = " << Mu1 << " k-ft, Mu- = " << Mu2 << " k-ft, Vu = " << Vu << ", Tu = " << Tu << endl;
-							cout << "£pMn+ = " << ReduceMn1 << " k-ft, £pMn- = " << ReduceMn2 << " k-ft, £pVn = " << 0.7 * Vu << ", £pTn = " << 0.7 * Tu << endl << endl;
-							/*cout << "£pMn+ = " << Mn1 / 12000 << " k-ft, £pMn- = " << Mn2 / 12000 << " k-ft, £pVn = " << 0.7 * Vu << ", £pTn = " << 0.7 * Tu << endl << endl;*/
-
 						}
 					}
-
 				}
 			}
 		}
