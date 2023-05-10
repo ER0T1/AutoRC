@@ -1,0 +1,116 @@
+<mxfile host="Electron" modified="2023-05-10T07:44:55.888Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="Fj8knx3VT8Ns96WiLIL4" version="21.2.8" type="device">
+  <diagram name="第 1 页" id="5uTGD1-F_f2LclqO-LFb">
+    <mxGraphModel dx="1594" dy="945" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-1" target="bwVw9Bn5m7LsywFNS_VE-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-1" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;程式啟動&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-3" target="bwVw9Bn5m7LsywFNS_VE-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-3" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;輸入參數&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-7" target="bwVw9Bn5m7LsywFNS_VE-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-7" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;計算&lt;br&gt;共同參數&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-13" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;未通過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-9" target="bwVw9Bn5m7LsywFNS_VE-12">
+          <mxGeometry x="-0.7909" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-18" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;通&lt;br&gt;過&lt;br&gt;&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-9" target="bwVw9Bn5m7LsywFNS_VE-7">
+          <mxGeometry x="-0.1429" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-9" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;幾何確認&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="350" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-12" target="bwVw9Bn5m7LsywFNS_VE-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="1090" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-12" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;提出警告&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-22" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;未通過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-19" target="bwVw9Bn5m7LsywFNS_VE-35">
+          <mxGeometry x="-0.4167" y="20" relative="1" as="geometry">
+            <mxPoint x="480" y="670" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-27" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;通&lt;br&gt;過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-19" target="bwVw9Bn5m7LsywFNS_VE-26">
+          <mxGeometry x="-0.1429" y="-20" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="730" />
+              <mxPoint x="340" y="730" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-19" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;幾何確認&lt;br&gt;Torsion&lt;br&gt;&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="630" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-30" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;未&lt;br&gt;通&lt;br&gt;過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-26" target="bwVw9Bn5m7LsywFNS_VE-12">
+          <mxGeometry x="0.0372" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-32" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;通&lt;br&gt;過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-26" target="bwVw9Bn5m7LsywFNS_VE-31">
+          <mxGeometry x="-0.1429" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-26" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;斷面尺寸&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;確認&lt;br&gt;Torsion+Shear&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="770" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-41" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-31" target="bwVw9Bn5m7LsywFNS_VE-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-31" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;配筋&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-38" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;通&lt;br&gt;過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-35" target="bwVw9Bn5m7LsywFNS_VE-37">
+          <mxGeometry x="-0.1429" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-44" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;未&lt;br&gt;通&lt;br&gt;過&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-35" target="bwVw9Bn5m7LsywFNS_VE-12">
+          <mxGeometry x="-0.6431" y="-20" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="810" />
+              <mxPoint x="450" y="1020" />
+              <mxPoint x="240" y="1020" />
+              <mxPoint x="240" y="950" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-35" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;斷面尺寸&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;確認&lt;br&gt;Shear&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="770" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bwVw9Bn5m7LsywFNS_VE-37" target="bwVw9Bn5m7LsywFNS_VE-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-37" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;配筋&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="920" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bwVw9Bn5m7LsywFNS_VE-40" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;程式結束&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="1060" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

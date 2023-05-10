@@ -1,5 +1,5 @@
 #include <iostream>
-#include < fstream >
+#include <fstream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -60,6 +60,7 @@ int main() {
 	// bw, h Confirmation
 	if (bw < 0.3 * h || bw < 10) {
 		cout << "Your beam has insufficient section dimensions, please increase the beam width!" << endl;
+		system("pause");
 		exit(0);
 	}
 	bool SkinRebar = false;
@@ -199,10 +200,12 @@ int main() {
 		//Section Size Confirmation
 		if (!SectionSizeConfirmationForTorsion(bw, Vu, Tu, fc, EffectiveDepth, ph, aoh, vc)) {
 			cout << "Your section size for Torsion is insufficient!\nPlease reset the section." << endl;
+			system("pause");
 			exit(0);
 		}
 		if (!SectionSizeConfirmationForShear(bw, Vu, fc, vc, EffectiveDepth)) {
 			cout << "Your section size for Shear is insufficient!\nPlease reset the section." << endl;
+			system("pause");
 			exit(0);
 		}
 
@@ -370,5 +373,6 @@ int main() {
 		// Reinforcement
 	}
 
+	system("pause");
 	return 0;
 }
