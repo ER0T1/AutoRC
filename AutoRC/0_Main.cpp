@@ -5,14 +5,6 @@
 #include <algorithm>
 using namespace std;
 
-// 狡籹秖
-template<typename T>
-vector<T> create_copy(vector<T> const& vec) {
-	vector<T> v(vec.size());
-	copy(vec.begin(), vec.end(), v.begin());
-	return v;
-}
-
 // Moment Zone
 double Beff(double, double, double, double, double, bool);
 double AsMinValue(double, double, double, double);
@@ -47,7 +39,7 @@ const int MainBarGrade = 60;
 const int StirrupGrade = 60;
 const int TorsionBarGrade = 60;
 const double dagg = 3.0 / 4.0;
-const double Lbin2Kft = 1 / 12 * 1E-3;
+const double Lbin2Kft = 1. / 12. * 1E-3;
 
 int main() {
 	// Read Strength Information:
@@ -258,8 +250,8 @@ int main() {
 		double ReduceMn2;
 		int UpperCount1 = MinHorizontalMainBarCount;
 		int LowerCount1 = MinHorizontalMainBarCount;
-		int UpperCount2 = 2;
-		int LowerCount2 = 2;
+		int UpperCount2;
+		int LowerCount2;
 		bool Reinforcement = true;
 		do {
 			// 糷惮
@@ -285,10 +277,8 @@ int main() {
 				LowerEachLayerCount[LowerLayers - 1] = LowerCount2;
 			}
 			// 盢–糷惮や计ㄖ秖
-			Mn2_PerLayerCount.resize(UpperLayers + LowerLayers);
-			reverse(LowerEachLayerCount.begin(), LowerEachLayerCount.end()); // 盢糷皌惮抖よ籔糷˙
-			Mn2_PerLayerCount.insert(Mn2_PerLayerCount.begin(), UpperEachLayerCount.begin(), UpperEachLayerCount.end());
-			Mn2_PerLayerCount.insert(Mn2_PerLayerCount.end(), LowerEachLayerCount.begin(), LowerEachLayerCount.end());
+			Mn2_PerLayerCount = UpperEachLayerCount;
+			Mn2_PerLayerCount.insert(Mn2_PerLayerCount.end(), LowerEachLayerCount.rbegin(), LowerEachLayerCount.rend());
 			// 璸衡–糷Τ瞏
 			UpperLayersDepthGuessC.resize(UpperLayers);
 			LowerLayersDepthGuessC.resize(LowerLayers);
@@ -296,39 +286,45 @@ int main() {
 			LowerLayersDepthGuessC[0] = h - cc - BarDiameter(Stirrup) - (BarDiameter(MainBar) / 2);
 			if (UpperLayers > 1) {
 				for (int layer = 1; layer <= UpperLayers - 1; layer++) {
-					UpperLayersDepthGuessC[layer] += (UpperLayersDepthGuessC[layer - 1] + BarDiameter(MainBar) + 1);
+					UpperLayersDepthGuessC[layer] = UpperLayersDepthGuessC[layer - 1] + BarDiameter(MainBar) + 1;
 				}
 			}
 			if (LowerLayers > 1) {
 				for (int layer = 1; layer <= UpperLayers - 1; layer++) {
-					LowerLayersDepthGuessC[layer] -= (LowerLayersDepthGuessC[layer + 1] + BarDiameter(MainBar) + 1);
+					LowerLayersDepthGuessC[layer] = LowerLayersDepthGuessC[layer - 1] - BarDiameter(MainBar) - 1;
 				}
 			}
-			Mn2_EffectiveDepthGuessC.resize(UpperLayers + LowerLayers);
-			reverse(LowerLayersDepthGuessC.begin(), LowerLayersDepthGuessC.end());
-			Mn2_EffectiveDepthGuessC.insert(Mn2_EffectiveDepthGuessC.begin(), UpperLayersDepthGuessC.begin(), UpperLayersDepthGuessC.end());
-			Mn2_EffectiveDepthGuessC.insert(Mn2_EffectiveDepthGuessC.end(), LowerLayersDepthGuessC.begin(), LowerLayersDepthGuessC.end());
-			for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
-				cout << Mn2_PerLayerCount[i] << ", ";
-			}
-			cout << endl;
-			for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
-				cout << Mn2_EffectiveDepthGuessC[i] << ", ";
-			}
-			cout << endl;
-			// 璸衡Mn+
+			// ㄖ糷Τ瞏
+			Mn2_EffectiveDepthGuessC = UpperLayersDepthGuessC;
+			Mn2_EffectiveDepthGuessC.insert(Mn2_EffectiveDepthGuessC.end(), LowerLayersDepthGuessC.rbegin(), LowerLayersDepthGuessC.rend());
+
+			// 埃岿ノ
+			//for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
+			//	cout << Mn2_PerLayerCount[i] << ", ";
+			//}
+			//cout << endl;
+			//for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
+			//	cout << Mn2_EffectiveDepthGuessC[i] << ", ";
+			//}
+			//cout << endl;
+
+			// Mn+ 把计
 			Mn1_EPSILON.resize(Mn2_PerLayerCount.size());
 			Mn1_PerLayerCount.resize(Mn2_PerLayerCount.size());
-			Mn1_EffectiveDepthGuessC.resize(Mn2_PerLayerCount.size());
-			Mn1_EffectiveDepthGuessC = create_copy(Mn2_EffectiveDepthGuessC);
+			Mn1_EffectiveDepthGuessC = Mn2_EffectiveDepthGuessC;
 			reverse(Mn1_EffectiveDepthGuessC.begin(), Mn1_EffectiveDepthGuessC.end());
+			for (int i = 0; i < Mn1_EffectiveDepthGuessC.size(); i++) {
+				Mn1_EffectiveDepthGuessC[i] = h - Mn1_EffectiveDepthGuessC[i];
+			}
 			Mn1_PerLayerCount.resize(Mn2_PerLayerCount.size());
-			Mn1_PerLayerCount = create_copy(Mn2_PerLayerCount);
-			reverse(Mn1_EffectiveDepthGuessC.begin(), Mn1_EffectiveDepthGuessC.end());
-			Mn1 = Moment(beff, h, fc, fy, MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, TorsionBar, HorizontalTorsionBarCount, false, Mn1_EPSILON, Mn1_COMPRESSIVESTRESSZONE);
-			// 璸衡Mn-
+			Mn1_PerLayerCount = Mn2_PerLayerCount;
+			reverse(Mn1_PerLayerCount.begin(), Mn1_PerLayerCount.end());
+			// Mn- 把计
 			Mn2_EPSILON.resize(Mn2_PerLayerCount.size());
-			Mn2 = -Moment(bw, h, fc, fy, MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, TorsionBar, HorizontalTorsionBarCount, false, Mn2_EPSILON, Mn2_COMPRESSIVESTRESSZONE);
+			// 璸衡Mn+
+			Mn1 = Moment(bw, h, fc, fy, MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, TorsionBar, HorizontalTorsionBarCount, false, Mn1_EPSILON, Mn1_COMPRESSIVESTRESSZONE);
+			// 璸衡Mn-
+			Mn2 = -Moment(beff, h, fc, fy, MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, TorsionBar, HorizontalTorsionBarCount, false, Mn2_EPSILON, Mn2_COMPRESSIVESTRESSZONE);
 			// 璸衡几Ρч搭玒计
 			if (Si == true) {
 				ReductionFactorMn1 = ReductionFactorMforSpiral(fy, Mn1_EPSILON);
@@ -338,8 +334,20 @@ int main() {
 				ReductionFactorMn1 = ReductionFactorMforOther(fy, Mn1_EPSILON);
 				ReductionFactorMn2 = ReductionFactorMforOther(fy, Mn2_EPSILON);
 			}
-			ReduceMn1 = ReductionFactorMn1 * Mn1 / 12000; // * Lbin2Kft;
-			ReduceMn2 = ReductionFactorMn2 * Mn2 / 12000; // * Lbin2Kft;
+			ReduceMn1 = ReductionFactorMn1 * Mn1 * Lbin2Kft;
+			ReduceMn2 = ReductionFactorMn2 * Mn2 * Lbin2Kft;
+
+			// 埃岿ノ
+			cout << "Mu+ = " << Mu1 << endl << "Mu- = " << Mu2 << endl << "Mn+ = " << ReduceMn1 << endl << "Mn- = " << ReduceMn2 << endl;
+			for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
+				cout << Mn2_PerLayerCount[i] << ", ";
+			}
+			cout << endl;
+			for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
+				cout << Mn2_EffectiveDepthGuessC[i] << ", ";
+			}
+			cout << endl;
+
 			// 铬癹伴
 			if (ReduceMn1 >= Mu1 && ReduceMn2 <= Mu2) {
 				break;
@@ -350,13 +358,16 @@ int main() {
 					UpperCount1 += 1;
 				}
 				else if (UpperLayers == 1 && UpperCount1 == MaxHorizontalMainBarCount) {
-					UpperLayers += 1;
+					UpperLayers += 1; UpperCount2 = 2;
 				}
 				else if (UpperLayers > 1 && MaxHorizontalMainBarCount - UpperCount2 > 1) {
 					UpperCount2 += 2;
 				}
-				else {
-					UpperCount2 += 2;
+				else if (UpperLayers > 1 && MaxHorizontalMainBarCount - UpperCount2 == 1) {
+					UpperCount2 += 1;
+				}
+				else if (UpperLayers > 1 && MaxHorizontalMainBarCount == UpperCount2) {
+					UpperLayers += 1; UpperCount2 = 2;
 				}
 			}
 			if (ReduceMn2 > Mu2) {
@@ -364,13 +375,16 @@ int main() {
 					LowerCount1 += 1;
 				}
 				else if (LowerLayers == 1 && LowerCount1 == MaxHorizontalMainBarCount) {
-					LowerLayers += 1;
+					LowerLayers += 1; LowerCount2 = 2;
 				}
 				else if (LowerLayers > 1 && MaxHorizontalMainBarCount - LowerCount2 > 1) {
-					UpperCount2 += 2;
-				}
-				else {
 					LowerCount2 += 2;
+				}
+				else if (LowerLayers > 1 && MaxHorizontalMainBarCount - LowerCount2 == 1) {
+					LowerCount2 += 1;
+				}
+				else if (LowerLayers > 1 && MaxHorizontalMainBarCount == LowerCount2) {
+					LowerLayers += 1; LowerCount2 = 2;
 				}
 			}
 		} while (Reinforcement);
@@ -378,19 +392,24 @@ int main() {
 		// 璸衡鉚惮の么惮
 
 		// 浪喷跋
-		cout << "程キや计 = " << MinHorizontalMainBarCount << endl
-			<< "程キや计 = " << MaxHorizontalMainBarCount << endl
-			<< "程羆や计 = " << MinMainBarCount << endl
-			<< "程羆や计 = " << MaxMainBarCount << endl
-			<< "Mu+ = " << Mu1 << endl << "Mu- = " << Mu2 << endl << "Mn+ = " << ReduceMn1 << endl << "Mn- = " << ReduceMn2 << endl;
-		for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
-			cout << Mn2_PerLayerCount[i] << ", ";
+		cout << "几Ρ惮程キや计 = " << MinHorizontalMainBarCount << endl
+			<< "几Ρ惮程キや计 = " << MaxHorizontalMainBarCount << endl
+			<< "几Ρ惮程羆や计 = " << MinMainBarCount << endl
+			<< "几Ρ惮程羆や计 = " << MaxMainBarCount << endl
+			<< "  Mu+ = " << Mu1 << endl << "  Mu- = " << Mu2 << endl << "Mn+ = " << ReduceMn1 << endl << "Mn- = " << ReduceMn2 << endl;
+		for (int i = 0; i < Mn1_PerLayerCount.size(); i++) {
+			cout << Mn1_PerLayerCount[i] << ", ";
 		}
 		cout << endl;
-		for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
-			cout << Mn2_EffectiveDepthGuessC[i] << ", ";
+		for (int i = 0; i < Mn1_EffectiveDepthGuessC.size(); i++) {
+			cout << Mn1_EffectiveDepthGuessC[i] << ", ";
 		}
 		cout << endl;
+		cout << "Mn1_C = " << Mn1_COMPRESSIVESTRESSZONE << endl;
+		cout << "Mn2_C = " << Mn2_COMPRESSIVESTRESSZONE << endl;
+		cout << "п痻惮キや计 = " << HorizontalTorsionBarCount << endl
+			<< "п痻惮や计 = " << VerticalTorsionBarCount << endl
+			<< "п痻惮羆や计 = " << 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4 << endl;
 	}
 	else {
 		// Reinforcement
