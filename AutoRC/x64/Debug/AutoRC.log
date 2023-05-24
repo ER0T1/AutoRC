@@ -1,11 +1,15 @@
 ﻿  0_Main.cpp
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(209,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(211,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(212,31): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(214,37): warning C4244: '+=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(215,35): warning C4244: '+=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(223,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(224,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(225,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(226,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(211,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(213,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(214,31): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(216,37): warning C4244: '+=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(217,35): warning C4244: '+=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(232,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(233,33): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(234,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\0_Main.cpp(235,23): warning C4244: '正在初始化': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+  3_Torsion Zone.cpp
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\3_Torsion Zone.cpp(32,45): warning C4244: '引數': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\3_Torsion Zone.cpp(32,84): warning C4244: '引數': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+  正在產生程式碼...
   AutoRC.vcxproj -> C:\Users\eroti\Desktop\AutoRC\AutoRC\x64\Debug\AutoRC.exe

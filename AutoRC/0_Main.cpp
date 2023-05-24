@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <numeric>
 using namespace std;
 
 // Moment Zone
@@ -25,8 +26,9 @@ double Aoh(double, double, double, int);
 double StirrupForTorsion(double, double, double);
 bool GeometryConfirmation(double, double, double, double);
 bool SectionSizeConfirmationForTorsion(double, double, double, double, double, double, double, double);
-double TorsionBarDesignQuantity(double, double, double, double, double, double, double);
-double TorsionBarSpace(double);
+double TorsionBarDesignQuantity(double, double, double, double, double, double, double, double, double);
+double TorsionBarSpace(double, int, int ,int);
+double TorsionBarDesignStrength(double, double, double, double, double, int, int);
 
 
 // Other Zone
@@ -203,19 +205,26 @@ int main() {
 
 		// Reinforcement
 
-		// 計算扭矩筋支數
-		auto Stirrup_For_Torsion = StirrupForTorsion(Tu, Fyt(TorsionBarGrade), aoh);
-		auto Torsion_Bar_Design_Quantity = TorsionBarDesignQuantity(bw, fc, fy, Fyt(TorsionBarGrade), Stirrup_For_Torsion, ph, acp);
+		// 計算扭矩筋
+		auto Stirrup_For_Torsion = StirrupForTorsion(Tu, TorsionBarGrade, aoh);
+		auto Torsion_Bar_Design_Quantity = TorsionBarDesignQuantity(Tu, bw, fc, fy, TorsionBarGrade, Stirrup_For_Torsion, ph, acp, aoh);
 		int TorsionBarCount = ceil(Torsion_Bar_Design_Quantity / BarArea(TorsionBar));
 		TorsionBarCount += TorsionBarCount % 2;
-		int HorizontalTorsionBarCount = ceil((bw - 2.0 * cc - 2.0 * BarDiameter(Stirrup) + TorsionBarSpace(ph)) / (BarDiameter(TorsionBar) + TorsionBarSpace(ph)));
-		int VerticalTorsionBarCount = ceil((h - 2.0 * cc - 2.0 * BarDiameter(Stirrup) + TorsionBarSpace(ph)) / (BarDiameter(TorsionBar) + TorsionBarSpace(ph)));
+		int HorizontalTorsionBarCount = ceil((bw - 2.0 * cc - 2.0 * BarDiameter(Stirrup) + TorsionBarSpace(ph, MainBar, Stirrup, TorsionBar)) / (BarDiameter(TorsionBar) + TorsionBarSpace(ph, MainBar, Stirrup, TorsionBar)));
+		int VerticalTorsionBarCount = ceil((h - 2.0 * cc - 2.0 * BarDiameter(Stirrup) + TorsionBarSpace(ph, MainBar, Stirrup, TorsionBar)) / (BarDiameter(TorsionBar) + TorsionBarSpace(ph, MainBar, Stirrup, TorsionBar)));
 		if (TorsionBarCount > 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4) {
-			HorizontalTorsionBarCount += ceil((TorsionBarCount - 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) + 4) / 2);
-			VerticalTorsionBarCount += ceil((TorsionBarCount - 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) + 4) / 2);
+			HorizontalTorsionBarCount += ceil((TorsionBarCount - 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4) / 2);
+			VerticalTorsionBarCount += ceil((TorsionBarCount - 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4) / 2);
 		}
+		TorsionBarCount = 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4;
+		auto Tn = TorsionBarDesignStrength(fy, aoh, Stirrup_For_Torsion, TorsionBarGrade, ph, TorsionBarCount, TorsionBar);
+		auto ReduceTn = 0.75 * Tn;
 
-		// 計算主筋支數
+		// 除錯用
+		//cout << Tn << endl;
+		//cout << ReduceTn << endl;
+
+		// 計算主筋
 		auto MinMainBarSpace = min({ 4.0 / 3.0 * dagg, BarDiameter(MainBar), 1.0 });
 		auto MaxMainBarSpace = min({ 900000 / fy - 2.5 * cc,720000 / fy });
 		auto MinMainBarQuantity = AsMinValue(bw, fc, fy, EffectiveDepth);
@@ -232,6 +241,8 @@ int main() {
 		int UpperLayers = 1, LowerLayers = 1;
 		vector <int> UpperEachLayerCount(UpperLayers);
 		vector <int> LowerEachLayerCount(LowerLayers);
+		int AllUpperCount;
+		int AllLowerCount;
 		vector <int> Mn1_PerLayerCount;
 		vector <int> Mn2_PerLayerCount;
 		vector <double> UpperLayersDepthGuessC;
@@ -250,8 +261,8 @@ int main() {
 		double ReduceMn2;
 		int UpperCount1 = MinHorizontalMainBarCount;
 		int LowerCount1 = MinHorizontalMainBarCount;
-		int UpperCount2;
-		int LowerCount2;
+		int UpperCount2 = 0;
+		int LowerCount2 = 0;
 		bool Reinforcement = true;
 		do {
 			// 上層筋
@@ -265,6 +276,20 @@ int main() {
 				}
 				UpperEachLayerCount[UpperLayers - 1] = UpperCount2;
 			}
+			// 檢核上層筋鋼筋量
+			AllUpperCount = 0;
+			for (int Layer = 0; Layer < UpperLayers; Layer++) {
+				AllUpperCount += UpperEachLayerCount[Layer];
+			}
+			if (AllUpperCount > MaxMainBarCount) {
+				cout << "Your section size for Amount of Reinforcement is insufficient!\nPlease reset the section." << endl;
+				system("pause");
+				exit(0);
+			}
+
+			// 除錯用
+			//cout << AllUpperCount << endl;
+
 			// 下層筋
 			if (LowerLayers == 1) {
 				LowerEachLayerCount[0] = LowerCount1;
@@ -276,6 +301,20 @@ int main() {
 				}
 				LowerEachLayerCount[LowerLayers - 1] = LowerCount2;
 			}
+			// 檢核下層筋鋼筋量
+			AllLowerCount = 0;
+			for (int Layer = 0; Layer < LowerLayers; Layer++) {
+				AllLowerCount += LowerEachLayerCount[Layer];
+			}
+			if (AllLowerCount > MaxMainBarCount) {
+				cout << "Your section size for Amount of Reinforcement is insufficient!\nPlease reset the section." << endl;
+				system("pause");
+				exit(0);
+			}
+
+			// 除錯用
+			//cout << AllLowerCount << endl;
+
 			// 將每層筋支數合併為一個向量
 			Mn2_PerLayerCount = UpperEachLayerCount;
 			Mn2_PerLayerCount.insert(Mn2_PerLayerCount.end(), LowerEachLayerCount.rbegin(), LowerEachLayerCount.rend());
@@ -284,15 +323,11 @@ int main() {
 			LowerLayersDepthGuessC.resize(LowerLayers);
 			UpperLayersDepthGuessC[0] = cc + BarDiameter(Stirrup) + (BarDiameter(MainBar) / 2);
 			LowerLayersDepthGuessC[0] = h - cc - BarDiameter(Stirrup) - (BarDiameter(MainBar) / 2);
-			if (UpperLayers > 1) {
-				for (int layer = 1; layer <= UpperLayers - 1; layer++) {
-					UpperLayersDepthGuessC[layer] = UpperLayersDepthGuessC[layer - 1] + BarDiameter(MainBar) + 1;
-				}
+			for (int layer = 1; layer <= UpperLayers - 1; layer++) {
+				UpperLayersDepthGuessC[layer] = UpperLayersDepthGuessC[layer - 1] + BarDiameter(MainBar) + 1;
 			}
-			if (LowerLayers > 1) {
-				for (int layer = 1; layer <= UpperLayers - 1; layer++) {
-					LowerLayersDepthGuessC[layer] = LowerLayersDepthGuessC[layer - 1] - BarDiameter(MainBar) - 1;
-				}
+			for (int layer = 1; layer <= LowerLayers - 1; layer++) {
+				LowerLayersDepthGuessC[layer] = LowerLayersDepthGuessC[layer - 1] - BarDiameter(MainBar) - 1;
 			}
 			// 合併上下層有效深度
 			Mn2_EffectiveDepthGuessC = UpperLayersDepthGuessC;
@@ -338,15 +373,15 @@ int main() {
 			ReduceMn2 = ReductionFactorMn2 * Mn2 * Lbin2Kft;
 
 			// 除錯用
-			cout << "Mu+ = " << Mu1 << endl << "Mu- = " << Mu2 << endl << "φMn+ = " << ReduceMn1 << endl << "φMn- = " << ReduceMn2 << endl;
-			for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
-				cout << Mn2_PerLayerCount[i] << ", ";
-			}
-			cout << endl;
-			for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
-				cout << Mn2_EffectiveDepthGuessC[i] << ", ";
-			}
-			cout << endl;
+			//cout << "Mu+ = " << Mu1 << endl << "Mu- = " << Mu2 << endl << "φMn+ = " << ReduceMn1 << endl << "φMn- = " << ReduceMn2 << endl;
+			//for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
+			//	cout << Mn2_PerLayerCount[i] << ", ";
+			//}
+			//cout << endl;
+			//for (int i = 0; i < Mn2_EffectiveDepthGuessC.size(); i++) {
+			//	cout << Mn2_EffectiveDepthGuessC[i] << ", ";
+			//}
+			//cout << endl;
 
 			// 跳出迴圈
 			if (ReduceMn1 >= Mu1 && ReduceMn2 <= Mu2) {
@@ -391,25 +426,30 @@ int main() {
 
 		// 計算箍筋及繫筋
 
+
+
 		// 檢驗區
 		cout << "撓曲筋最小水平支數 = " << MinHorizontalMainBarCount << endl
 			<< "撓曲筋最大水平支數 = " << MaxHorizontalMainBarCount << endl
 			<< "撓曲筋最小總支數 = " << MinMainBarCount << endl
 			<< "撓曲筋最大總支數 = " << MaxMainBarCount << endl
 			<< "  Mu+ = " << Mu1 << endl << "  Mu- = " << Mu2 << endl << "φMn+ = " << ReduceMn1 << endl << "φMn- = " << ReduceMn2 << endl;
+		cout << "每層支數 = { ";
 		for (int i = 0; i < Mn1_PerLayerCount.size(); i++) {
 			cout << Mn1_PerLayerCount[i] << ", ";
 		}
-		cout << endl;
+		cout << " }" << endl;
+		cout << "每層深度 = { ";
 		for (int i = 0; i < Mn1_EffectiveDepthGuessC.size(); i++) {
 			cout << Mn1_EffectiveDepthGuessC[i] << ", ";
 		}
-		cout << endl;
-		cout << "Mn1_C = " << Mn1_COMPRESSIVESTRESSZONE << endl;
-		cout << "Mn2_C = " << Mn2_COMPRESSIVESTRESSZONE << endl;
+		cout << " }" << endl;
+		//cout << "Mn1_C = " << Mn1_COMPRESSIVESTRESSZONE << endl;
+		//cout << "Mn2_C = " << Mn2_COMPRESSIVESTRESSZONE << endl;
 		cout << "扭矩筋水平支數 = " << HorizontalTorsionBarCount << endl
 			<< "扭矩筋垂直支數 = " << VerticalTorsionBarCount << endl
 			<< "扭矩筋總支數 = " << 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4 << endl;
+		cout <<  "  Tu = " << Tu << endl << "φTn = " << ReduceTn << endl;
 	}
 	else {
 		// Reinforcement

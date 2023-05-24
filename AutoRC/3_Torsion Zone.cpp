@@ -42,17 +42,20 @@ bool GeometryConfirmation(double Tu, double fc, double Acp, double Pcp) {
 }
 
 double StirrupForTorsion(double Tu, double Fyt, double Aoh) {
-	return 8000.0 * abs(Tu) / (0.85 * Aoh) / Fyt * tan(45.0 * PI / 180.0);
+	return 12.0 * abs(Tu) / 2 / (0.85 * Aoh) / Fyt;
 }
 
-double TorsionBarDesignQuantity(double bw, double fc, double fy, double Fyt, double StirrupForTorsion, double Ph, double Acp) {
+double TorsionBarDesignQuantity(double Tu, double bw, double fc, double fy, double Fyt, double StirrupForTorsion, double Ph, double Acp, double Aoh) {
 	auto TestValue_1 = 5.0 * sqrt(fc) * Acp / fy - StirrupForTorsion * Ph * Fyt / fy;
 	auto TestValue_2 = 5.0 * sqrt(fc) * Acp / fy - 25.0 * bw * Ph / fy;
-	return min({ TestValue_1, TestValue_2 });
+	auto Tast_1 = min({ TestValue_1, TestValue_2 });
+	auto Test_2 = Tu * Ph * 12 / 1.275 / Aoh / Fyt;
+	return max({ Tast_1, Test_2 });
 }
 
-double TorsionBarSpace(double Ph) {
-	return min(Ph / 8.0, 12.0);
+double TorsionBarSpace(double Ph, int MainBar, int Stirrup, int TorsionBar) {
+	return min({ Ph / 8.0, 12.0, 16 * BarDiameter(MainBar), 48 * BarDiameter(Stirrup),24 * BarDiameter(TorsionBar) });
+	// return min({ Ph / 8.0, 12.0 });
 }
 
 bool SectionSizeConfirmationForTorsion(double bw, double Vu, double Tu, double fc, double EffectiveDepth, double Ph, double Aoh, double Vc) {
@@ -60,4 +63,10 @@ bool SectionSizeConfirmationForTorsion(double bw, double Vu, double Tu, double f
 	auto TestValue_1 = sqrt(pow(Vu / (bw * EffectiveDepth), 2) + pow((Tu * Ph / (1.7 * pow(Aoh, 2))), 2));
 	auto TestValue_2 = 0.75 * (Vc / bw * EffectiveDepth + 8 * sqrt(fc));
 	return TestValue_1 <= TestValue_2;
+}
+
+double TorsionBarDesignStrength(double fy,double Aoh, double StirrupForTorsion, double Fyt, double Ph, int TorsionBarCount, int TorsionBar) {
+	auto TestValue_1 = 2 * 0.85 * Aoh * StirrupForTorsion * Fyt;
+	auto TestValue_2 = 2 * 0.85 * Aoh * TorsionBarCount * BarArea(TorsionBar) * fy / Ph;
+	return min({ TestValue_1, TestValue_2 });
 }
