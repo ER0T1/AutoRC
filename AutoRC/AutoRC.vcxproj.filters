@@ -13,25 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="來源檔案\Core">
+      <UniqueIdentifier>{0c1538b5-3aaf-4b7b-84c5-9ebf0889d39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Web">
+      <UniqueIdentifier>{efb8712d-9eb6-4b69-aeca-a2e6ee80a67a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1_Moment Zone.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="2_Shear Zone.cpp">
-      <Filter>來源檔案</Filter>
+    <ClCompile Include="Core\0_1_Stirrup.cpp">
+      <Filter>來源檔案\Core</Filter>
     </ClCompile>
-    <ClCompile Include="3_Torsion Zone.cpp">
-      <Filter>來源檔案</Filter>
+    <ClCompile Include="Core\0_Core.cpp">
+      <Filter>來源檔案\Core</Filter>
     </ClCompile>
-    <ClCompile Include="4_Other Zone.cpp">
-      <Filter>來源檔案</Filter>
+    <ClCompile Include="Core\1_1_CalculateM.cpp">
+      <Filter>來源檔案\Core</Filter>
     </ClCompile>
-    <ClCompile Include="0_Main.cpp">
-      <Filter>來源檔案</Filter>
+    <ClCompile Include="Core\1_Moment Zone.cpp">
+      <Filter>來源檔案\Core</Filter>
     </ClCompile>
-    <ClCompile Include="1_1_CalculateM.cpp">
-      <Filter>來源檔案</Filter>
+    <ClCompile Include="Core\2_Shear Zone.cpp">
+      <Filter>來源檔案\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\3_Torsion Zone.cpp">
+      <Filter>來源檔案\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\4_Other Zone.cpp">
+      <Filter>來源檔案\Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web\HTMLPage.htm">
+      <Filter>來源檔案\Web</Filter>
+    </None>
+    <None Include="Web\StyleSheet.css">
+      <Filter>來源檔案\Web</Filter>
+    </None>
   </ItemGroup>
 </Project>

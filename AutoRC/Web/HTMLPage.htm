@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+    <meta charset='utf-8' />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+</HEAD>
+<BODY>
+    <h1>RC design and visualize</h1>
+    <hr>
+
+    <table style="width:100%"><!--Main structure -->
+        <tr>
+            <th style="width:30%">
+                <!--input setting -->
+                <form>
+                    <label for="setting">fy  :</label>
+                    <input type="text" id="fy" name="fy" value="60"> ksi<br>
+
+                    <label for="setting">fyt:</label>
+                    <input type="text" id="fyt" name="fyt" value="60"> ksi<br>
+
+                    <label for="setting">fc' :</label>
+                    <input type="text" id="fc'" name="fc'" value="4"> ksi<br>
+
+                    <label for="Size of main Reinforcement">Size of main Reinforcement :  </label>
+                    <select id="Size of main Reinforcement" name="Size of main Reinforcement">
+                        <option value="" selected>Size of main Reinforcement</option>
+                        <option value="No.6">No.6</option>
+                        <option value="No.7">No.7</option>
+                        <option value="No.8">No.8</option>
+                        <option value="No.9">No.9</option>
+                        <option value="No.10">No.10</option>
+                        <option value="No.11">No.11</option>
+                    </select>
+                    <br>
+                    <label for="Size of Stirrups">Size of Stirrups : </label>
+                    <select name="Size of Stirrups">
+                        <option value="" selected>Size of Stirrups </option>
+                        <option value="No.3">No.3</option>
+                        <option value="No.4">No.4</option>
+                        <option value="No.5">No.5</option>
+                    </select><br>
+
+                    <label for="Spacement of Stirrups">Spacement of Stirrups : </label>
+                    <input type="text" id="Spacement" name="S of Stirrups" value="5"> in<br>
+
+                    <label for="SDC">SDC : </label>
+                    <select name="SDC">
+                        <option value="SDC D,E,F" selected>D,E,F</option>
+                        <option value="SDC A,B,C">A,B,C</option>
+                    </select><br><br>
+                    
+                    <!--<input type="text" id="SizeOfMainRein" name="SizeOfMainRein" value="25"><br>-->
+                    <input type="button" value="Run">
+                    <!--input setting -->
+                </form>
+            </th>
+            <th rowspan="2">
+                <!--output picture -->
+
+               
+
+
+            </th>
+       
+        <tr>
+            <th style="background-color: none">
+                <!--output information -->
+                <table>
+                    <tr>
+                        <th>Mu+</th>
+                        <th>Mu-</th>
+                        <th>fi</th>
+                    </tr>
+                    <tr>
+                        <td>60</td>
+                        <td>40</td>
+                        <td>o.9</td>
+                    </tr>
+                </table>
+                <!--output information -->
+            </th>
+        </tr>
+    </table>
+
+
+</BODY>
+</html>
