@@ -8,21 +8,23 @@ using namespace std;
 
 // 輸入用結構
 struct InPutData {
-	// Read Strength Information:// klb-ft, klb, klb-ft
+	// Read Strength Information:// kips-ft, kips, kips-ft
 	double Mu1{}; double Mu2{}; double Vu1{}; double Vu2{}; double Tu{};
 	// Read Size Information:// in
 	double Sw{}; double bw{}; double hf{}; double h{}; double bf{}; double ln{};
 	// Read Material Information:// psi
 	double fc{}; double fy{};
+	// Coefficient Load Combination:// psi/ft^3
+	double Dl{}; double Ll{}; double LoadFactorDL{}; double LoadFactorLL{};
 	// Beam Type Confirmation:
 	bool WingWidthType{}; string WidthType{};
-	//Strong Earthquake Area Confirmation:
+	// Strong Earthquake Area Confirmation:
 	bool Ei{}; string EarthquakeArea{};
-	//Enter the Rebar number:
+	// Enter the Rebar number:
 	int MainBar{}; int Stirrup{}; int TorsionBar{};
 	// Design Clear Cover thickness:
 	double cc{};
-	//Stirrup Information:
+	// Stirrup Information:
 	bool Si{}; string StirrupInformation{};
 	// Global Variable
 	double MainBarGrade{}; double StirrupGrade{}; double TorsionBarGrade{}; double dagg{};
@@ -45,6 +47,7 @@ double ReductionFactorMforSpiral(double, vector <double>);
 // Shear Zone
 double Vc(double, double, double);
 bool SectionSizeConfirmationForShear(double, double, double, double, double);
+double Ve(double, double, double, double, double, double, double);
 
 // Torsion Zone
 double Acp(double, double, double, bool);
@@ -58,11 +61,12 @@ double TorsionBarDesignQuantity(double, double, double, double, double, double, 
 double TorsionBarSpace(double, int, int ,int);
 double TorsionBarDesignStrength(double, double, double, double, double, int, int);
 
-
 // Other Zone
 double BarDiameter(int);
 double BarArea(int);
 double Fyt(int);
+double CalculateDL(double, double, double, double, double);
+double CalculateLL(double, double);
 
 // Global Variable
 // Unit Conversion
@@ -90,6 +94,8 @@ bool Core(InPutData DataIN) {
 	auto ao = 0.85 * Aoh(DataIN.bw, DataIN.h, DataIN.cc, DataIN.Stirrup);
 	auto vc = Vc(DataIN.bw, DataIN.fc, EffectiveDepth);
 	auto Vu = max({ abs(DataIN.Vu1),abs(DataIN.Vu2) });
+	auto Dl = CalculateDL(DataIN.Sw, DataIN.bw, DataIN.h, DataIN.hf, DataIN.Dl);
+	auto Ll = CalculateLL(DataIN.Sw, DataIN.Ll);
 
 	// Geometry Confirmation ( Confirm whether torsion bars are required. )
 	if (GeometryConfirmation(DataIN.Tu, DataIN.fc, acp, pcp)) {
@@ -168,6 +174,15 @@ bool Core(InPutData DataIN) {
 		int UpperCount2 = 0;
 		int LowerCount2 = 0;
 		bool Reinforcement = true;
+
+		// 剪力筋
+		vector <double> Mpr1_EPSILON;
+		vector <double> Mpr2_EPSILON;
+		double Mpr1_COMPRESSIVESTRESSZONE;
+		double Mpr2_COMPRESSIVESTRESSZONE;
+		double Mpr1;
+		double Mpr2;
+		double ve;
 
 		// 繫筋
 		int TieCount;
@@ -258,10 +273,15 @@ bool Core(InPutData DataIN) {
 			reverse(Mn1_PerLayerCount.begin(), Mn1_PerLayerCount.end());
 			// Mn- 參數
 			Mn2_EPSILON.resize(Mn2_PerLayerCount.size());
-			// 計算Mn+
+			// 計算Mn+及Mn-
 			Mn1 = Moment(DataIN.bw, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, false, Mn1_EPSILON, Mn1_COMPRESSIVESTRESSZONE);
-			// 計算Mn-
 			Mn2 = -Moment(beff, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, false, Mn2_EPSILON, Mn2_COMPRESSIVESTRESSZONE);
+			// 計算Mpr+及Mpr-及Ve
+			Mpr1_EPSILON = Mn1_EPSILON; Mpr2_EPSILON = Mn2_EPSILON;
+			Mpr1 = Moment(DataIN.bw, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, true, Mpr1_EPSILON, Mpr1_COMPRESSIVESTRESSZONE);
+			Mpr2 = -Moment(beff, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, true, Mpr2_EPSILON, Mpr2_COMPRESSIVESTRESSZONE);
+			ve = Ve(DataIN.ln, Mpr1, Mpr2, DataIN.LoadFactorDL, DataIN.LoadFactorLL, Dl, Ll);
+			
 			// 計算撓曲折減係數
 			if (DataIN.Si == true) {
 				ReductionFactorMn1 = ReductionFactorMforSpiral(DataIN.fy, Mn1_EPSILON);

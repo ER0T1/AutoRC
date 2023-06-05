@@ -1,3 +1,5 @@
+// v 0.23.6.5
+
 #define _WIN32_WINNT 0x0600
 #pragma warning( disable : 4267 4244 26495)
 
@@ -40,21 +42,23 @@ const auto port = 18080;
 double enlarge = 15; // 放大倍率
 
 struct InPutData {
-	// Read Strength Information:// klb-ft, klb, klb-ft
+	// Read Strength Information:// kips-ft, kips, kips-ft
 	double Mu1{}; double Mu2{}; double Vu1{}; double Vu2{}; double Tu{};
 	// Read Size Information:// in
 	double Sw{}; double bw{}; double hf{}; double h{}; double bf{}; double ln{};
 	// Read Material Information:// psi
 	double fc{}; double fy{};
+	// Coefficient Load Combination:// psi/ft^3
+	double Dl{}; double Ll{}; double LoadFactorDL{}; double LoadFactorLL{};
 	// Beam Type Confirmation:
 	bool WingWidthType{}; string WidthType{};
-	//Strong Earthquake Area Confirmation:
+	// Strong Earthquake Area Confirmation:
 	bool Ei{}; string EarthquakeArea{};
-	//Enter the Rebar number:
+	// Enter the Rebar number:
 	int MainBar{}; int Stirrup{}; int TorsionBar{};
 	// Design Clear Cover thickness:
 	double cc{};
-	//Stirrup Information:
+	// Stirrup Information:
 	bool Si{}; string StirrupInformation{};
 	// Global Variable
 	double MainBarGrade{}; double StirrupGrade{}; double TorsionBarGrade{}; double dagg{};
@@ -71,11 +75,13 @@ int main() {
 	InPutData DataIN;
 
 	// Read Strength Information:
-	DataIN.Mu1 = 158.507, DataIN.Mu2 = -308.283, DataIN.Vu1 = 67.4, DataIN.Vu2 = -71.41, DataIN.Tu = 58.153; // klb-ft, klb, klb-ft
+	DataIN.Mu1 = 158.507, DataIN.Mu2 = -308.283, DataIN.Vu1 = 67.4, DataIN.Vu2 = -71.41, DataIN.Tu = 58.153; // kips-ft, kips, kips-ft
 	// Read Size Information:
 	DataIN.Sw = 260.0, DataIN.bw = 21.0, DataIN.hf = 12.0, DataIN.h = 28.0, DataIN.bf = 84, DataIN.ln = 236.0; // in
 	// Read Material Information:
 	DataIN.fc = 5000.0, DataIN.fy = 60000.0; // psi
+	// Coefficient Load Combination:// psi/ft^3
+	DataIN.Dl = 150.0, DataIN.Ll = 40.0; DataIN.LoadFactorDL = 1.2; DataIN.LoadFactorLL = 1.0;
 
 	// Beam Type Confirmation
 	cout << "Whether it is the Middle Beam or the Side Beam? (S/M)" << endl;
@@ -263,7 +269,7 @@ string ToSVG(double limmitOfB, double limmitOfH, double Offset, double h, double
 	}
 
 
-	/*新堀金
+	/*新箍筋
 	<rect x = "50" y = "20" rx = "20" ry = "20" width = "150" height = "150"
 	 style = "fill:red;stroke:black;stroke-width:5;opacity:0.5" / >*/
 	for (int i = 0; i <= 1; i++) {

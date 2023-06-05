@@ -62,3 +62,11 @@ double Fyt(int Grade) {
 		exit(0);
 	}
 }
+
+double CalculateDL(double Sw, double bw, double h, double hf, double Dl) {
+	return (Sw * hf / 144. + bw / 12. * (h / 12. - hf / 12.)) * Dl / 1000.;
+}
+
+double CalculateLL(double Sw, double Ll) {
+	return Sw * Ll / 12000.;
+}
