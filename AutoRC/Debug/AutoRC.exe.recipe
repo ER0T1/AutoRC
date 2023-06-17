@@ -2,12 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\eroti\Desktop\AutoRC\AutoRC\Debug\AutoRC.exe</FullPath>
+      <FullPath>C:\Users\eroti\Desktop\AutoRC\RC\AutoRC-main\Debug\AutoRC.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\Web\HTMLPage.htm</FullPath>
+      <FullPath>C:\Users\eroti\Desktop\AutoRC\RC\AutoRC-main\AutoRC\Web\HTMLPage.htm</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

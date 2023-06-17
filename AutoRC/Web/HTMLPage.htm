@@ -3,6 +3,8 @@
     <meta charset='utf-8' />
     <title></title>
     <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+    <!-- using jQuery library for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 </HEAD>
 <BODY>
     <h1>RC design and visualize</h1>
@@ -20,25 +22,71 @@
                     <input type="text" id="fyt" name="fyt" value="60"> ksi<br>
 
                     <label for="setting">fc' :</label>
-                    <input type="text" id="fc'" name="fc'" value="4"> ksi<br>
+                    <input type="text" id="fc" name="fc" value="4"> ksi<br>
 
-                    <label for="Size of main Reinforcement">Size of main Reinforcement :  </label>
-                    <select id="Size of main Reinforcement" name="Size of main Reinforcement">
+                    <label for="setting">Mu+ :</label>
+                    <input type="text" id="Mu1" name="Mu1" value="150"> kips-ft<br>
+
+                    <label for="setting">Mu- :</label>
+                    <input type="text" id="Mu2" name="Mu2" value="-300"> kips-ft<br>
+
+                    <label for="setting">Vu+ :</label>
+                    <input type="text" id="Vu1" name="Vu1" value="65"> kips<br>
+
+                    <label for="setting">Vu- :</label>
+                    <input type="text" id="Vu2" name="Vu2" value="-70"> kips<br>
+
+                    <label for="setting">Tu :</label>
+                    <input type="text" id="Tu" name="Tu" value="60"> kips<br>
+
+                    <label for="MainBar">Size of main Reinforcement :  </label>
+                    <select id="MainBar" name="MainBar">
                         <option value="" selected>Size of main Reinforcement</option>
-                        <option value="No.6">No.6</option>
-                        <option value="No.7">No.7</option>
-                        <option value="No.8">No.8</option>
-                        <option value="No.9">No.9</option>
-                        <option value="No.10">No.10</option>
-                        <option value="No.11">No.11</option>
-                    </select>
-                    <br>
+                        <option value="6">No.6</option>
+                        <option value="7">No.7</option>
+                        <option value="8">No.8</option>
+                        <option value="9">No.9</option>
+                        <option value="10">No.10</option>
+                        <option value="11">No.11</option>
+                    </select><br>
+
+                    <label for="MainBarGrade">Grade of main Reinforcement :  </label>
+                    <select id="MainBarGrade" name="MainBarGrade">
+                        <option value="" selected>Grade of main Reinforcement</option>
+                        <option value="60">Gr.60</option>
+                        <option value="80">Gr.80</option>
+                    </select><br>
+
                     <label for="Size of Stirrups">Size of Stirrups : </label>
-                    <select name="Size of Stirrups">
+                    <select id="Stirrup" name="Size of Stirrups">
                         <option value="" selected>Size of Stirrups </option>
-                        <option value="No.3">No.3</option>
-                        <option value="No.4">No.4</option>
-                        <option value="No.5">No.5</option>
+                        <option value="3">No.3</option>
+                        <option value="4">No.4</option>
+                        <option value="5">No.5</option>
+                    </select><br>
+
+                    <label for="StirrupGrade">Grade of Stirrup :  </label>
+                    <select id="StirrupGrade" name="StirrupGrade">
+                        <option value="" selected>Grade of Stirrup</option>
+                        <option value="60">Gr.60</option>
+                        <option value="80">Gr.80</option>
+                        <option value="100">Gr.100</option>
+                    </select><br>
+
+                    <label for="TorsionBar">Size of Torsion Bar :  </label>
+                    <select id="TorsionBar" name="TorsionBar">
+                        <option value="" selected>Size of Torsion Bar</option>
+                        <option value="5">No.5</option>
+                        <option value="6">No.6</option>
+                        <option value="7">No.7</option>
+                        <option value="8">No.8</option>
+                    </select><br>
+
+                    <label for="TorsionBarGrade">Grade of Torsion Bar :  </label>
+                    <select id="TorsionBarGrade" name="TorsionBarGrade">
+                        <option value="" selected>Grade of Torsion Bar</option>
+                        <option value="60">Gr.60</option>
+                        <option value="80">Gr.80</option>
                     </select><br>
 
                     <label for="Spacement of Stirrups">Spacement of Stirrups : </label>
@@ -49,20 +97,59 @@
                         <option value="SDC D,E,F" selected>D,E,F</option>
                         <option value="SDC A,B,C">A,B,C</option>
                     </select><br><br>
-                    
+
                     <!--<input type="text" id="SizeOfMainRein" name="SizeOfMainRein" value="25"><br>-->
-                    <input type="button" value="Run">
+                    <!--<input type="button" value="Run">-->
+
+                    <button id='RunMain'>Run</button>
+                    <span id="result"></span>
+                    <script>
+                        $('#RunMain').click(function (e) {
+                            e.preventDefault();
+                            let fy = $('#fy').val();
+                            let fyt = $('#fyt').val();
+                            let fc = $('#fc').val();
+                            let Mu1 = $('#Mu1').val();
+                            let Mu2 = $('#Mu2').val();
+                            let Vu1 = $('#Vu1').val();
+                            let Vu2 = $('#Vu2').val();
+                            let Tu = $('#Tu').val();
+                            let MainBar = $('#MainBar').val();
+                            let TorsionBar = $('#TorsionBar').val();
+                            let Stirrup = $('#Stirrup').val();
+                            let MainBarGrade = $('#MainBarGrade').val();
+                            let StirrupGrade = $('#StirrupGrade').val();
+                            let TorsionBarGrade = $('#TorsionBarGrade').val();
+                            $.post("/Initialization", {
+                                fy: fy,
+                                fyt: fyt,
+                                fc: fc,
+                                Mu1: Mu1,
+                                Mu2: Mu2,
+                                Vu1: Vu1,
+                                Vu2: Vu2,
+                                Tu: Tu,
+                                MainBar: MainBar,
+                                Stirrup: Stirrup,
+                                TorsionBar: TorsionBar,
+                                MainBarGrade: MainBarGrade,
+                                StirrupGrade: StirrupGrade,
+                                TorsionBarGrade: TorsionBarGrade,
+                            }, function (data) {
+                                console.log(data);
+                                $("#dataSVG").html(data.SVG);
+                                $("#dataMu1").html(data.Mu1);
+                                $("#dataMu2").html(data.Mu2);
+                            });
+                        });
+                    </script>
+
                     <!--input setting -->
                 </form>
             </th>
-            <th rowspan="2">
+            <th rowspan="2" id="dataSVG">
                 <!--output picture -->
-
-               
-
-
             </th>
-       
         <tr>
             <th style="background-color: none">
                 <!--output information -->
@@ -73,8 +160,8 @@
                         <th>fi</th>
                     </tr>
                     <tr>
-                        <td>60</td>
-                        <td>40</td>
+                        <td></td>
+                        <td></td>
                         <td>o.9</td>
                     </tr>
                 </table>

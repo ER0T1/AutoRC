@@ -33,8 +33,33 @@ struct InPutData {
 };
 
 struct OutPutData {
-
-};
+	// Write Strength Information:// kips-ft, kips, kips-ft
+	double Mu1{}; double Mu2{}; double Vu1{}; double Vu2{}; double Tu{};
+	// Write Size Information:// in
+	double Sw{}; double bw{}; double hf{}; double h{}; double bf{}; double ln{};
+	// Write Material Information:// psi
+	double fc{}; double fy{};
+	// Coefficient Load Combination:// psi/ft^3
+	double Dl{}; double Ll{}; double LoadFactorDL{}; double LoadFactorLL{};
+	// Beam Type Confirmation:
+	bool WingWidthType{}; string WidthType{};
+	// Strong Earthquake Area Confirmation:
+	bool Ei{}; string EarthquakeArea{};
+	// Enter the Rebar number:
+	int MainBar{}; int Stirrup{}; int TorsionBar{};
+	// Design Clear Cover thickness:
+	double cc{};
+	// Stirrup Information:
+	bool Si{}; string StirrupInformation{};
+	// Global Variable
+	double MainBarGrade{}; double StirrupGrade{}; double TorsionBarGrade{}; double dagg{};
+	// Unit Setting
+	string ForceMultLength{}; string Force{}; string Length{};
+	// Output Moment Data
+	double ReduceMn1{}; double ReduceMn2{}; double ReductionFactorMn1{}; double ReductionFactorMn2{}; int MinHorizontalMainBarCount{}; int MaxHorizontalMainBarCount{}; int MinMainBarCount{}; int MaxMainBarCount{}; vector <int> Mn1_PerLayerCount{}; vector <int> Mn2_PerLayerCount{}; vector <double> Mn1_EffectiveDepthGuessC{}; vector <double> Mn2_EffectiveDepthGuessC{};
+	// Output Torsion Data
+	double ReduceTn{}; double ReduceT{}; int HorizontalTorsionBarCount{}; int VerticalTorsionBarCount{}; int TotalTorsionBarCount{};
+}DataOUT;
 
 // Moment Zone
 double Beff(double, double, double, double, double, bool);
@@ -72,12 +97,10 @@ double CalculateLL(double, double);
 // Unit Conversion
 const double Lbin2Kft = 1. / 12. * 1E-3;
 
-bool Core(InPutData DataIN) {
+OutPutData Core(InPutData& DataIN) {
 	// bw, h Confirmation
 	if (DataIN.bw < 0.3 * DataIN.h || DataIN.bw < 10) {
 		cout << "Your beam has insufficient section dimensions, please increase the beam width!" << endl;
-		system("pause");
-		exit(0);
 	}
 	bool SkinRebar = false;
 	if (DataIN.h >= 36) {
@@ -103,13 +126,9 @@ bool Core(InPutData DataIN) {
 		//Section Size Confirmation
 		if (!SectionSizeConfirmationForTorsion(DataIN.bw, Vu, DataIN.Tu, DataIN.fc, EffectiveDepth, ph, aoh, vc)) {
 			cout << "Your section size for Torsion is insufficient!\nPlease reset the section." << endl;
-			system("pause");
-			exit(0);
 		}
 		if (!SectionSizeConfirmationForShear(DataIN.bw, Vu, DataIN.fc, vc, EffectiveDepth)) {
 			cout << "Your section size for Shear is insufficient!\nPlease reset the section." << endl;
-			system("pause");
-			exit(0);
 		}
 
 		// Reinforcement
@@ -203,8 +222,6 @@ bool Core(InPutData DataIN) {
 			AllUpperCount = reduce(UpperEachLayerCount.begin(), UpperEachLayerCount.end(), 0);
 			if (AllUpperCount > MaxMainBarCount) {
 				cout << "Your section size for Amount of Reinforcement is insufficient!\nPlease reset the section." << endl;
-				system("pause");
-				exit(0);
 			}
 
 			// 除錯用
@@ -225,8 +242,6 @@ bool Core(InPutData DataIN) {
 			AllLowerCount = reduce(LowerEachLayerCount.begin(), LowerEachLayerCount.end(), 0);
 			if (AllLowerCount > MaxMainBarCount) {
 				cout << "Your section size for Amount of Reinforcement is insufficient!\nPlease reset the section." << endl;
-				system("pause");
-				exit(0);
 			}
 
 			// 除錯用
@@ -418,14 +433,32 @@ bool Core(InPutData DataIN) {
 		cout << " }" << endl;
 		//cout << "Mn1_C = " << Mn1_COMPRESSIVESTRESSZONE << endl;
 		//cout << "Mn2_C = " << Mn2_COMPRESSIVESTRESSZONE << endl;
+		int TotalTorsionBarCount = 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4;
 		cout << "扭矩筋水平支數 = " << HorizontalTorsionBarCount << endl
 			<< "扭矩筋垂直支數 = " << VerticalTorsionBarCount << endl
-			<< "扭矩筋總支數 = " << 2 * (HorizontalTorsionBarCount + VerticalTorsionBarCount) - 4 << endl;
+			<< "扭矩筋總支數 = " << TotalTorsionBarCount << endl;
 		cout <<  "  Tu = " << DataIN.Tu << endl << "φTn = " << ReduceTn << endl;
+		DataOUT.Mu1 = DataIN.Mu1; DataOUT.Mu2 = DataIN.Mu2; DataOUT.Vu1 = DataIN.Vu1; DataOUT.Vu2 = DataIN.Vu2; DataOUT.Tu = DataIN.Tu;
+		DataOUT.Sw = DataIN.Sw; DataOUT.bw = DataIN.bw; DataOUT.hf = DataIN.hf; DataOUT.h = DataIN.h; DataOUT.bf = DataIN.bf; DataOUT.ln = DataIN.ln;
+		DataOUT.fc = DataIN.fc; DataOUT.fy = DataIN.fy;
+		DataOUT.Dl = DataIN.Dl; DataOUT.Ll = DataIN.Ll; DataOUT.LoadFactorDL = DataIN.LoadFactorDL; DataOUT.LoadFactorLL = DataIN.LoadFactorLL;
+		DataOUT.WingWidthType = DataIN.WingWidthType; DataOUT.WidthType = DataIN.WidthType;
+		DataOUT.Ei = DataIN.Ei; DataOUT.EarthquakeArea = DataIN.EarthquakeArea;
+		DataOUT.MainBar = DataIN.MainBar; DataOUT.Stirrup = DataIN.Stirrup; DataOUT.TorsionBar = DataIN.TorsionBar;
+		DataOUT.cc = DataIN.cc;
+		DataOUT.Si = DataIN.Si; DataOUT.StirrupInformation = DataIN.StirrupInformation;
+		DataOUT.MainBarGrade = DataIN.MainBarGrade; DataOUT.StirrupGrade = DataIN.StirrupGrade; DataOUT.TorsionBarGrade = DataIN.TorsionBarGrade; DataOUT.dagg = DataIN.dagg;
+		DataOUT.ForceMultLength = DataIN.ForceMultLength; DataOUT.Force = DataIN.Force; DataOUT.Length = DataIN.Length;
+		DataOUT.ReduceMn1 = ReduceMn1; DataOUT.ReduceMn2 = ReduceMn2; DataOUT.ReductionFactorMn1 = ReductionFactorMn1; DataOUT.ReductionFactorMn2 = ReductionFactorMn2;
+		DataOUT.MinHorizontalMainBarCount = MinHorizontalMainBarCount; DataOUT.MaxHorizontalMainBarCount = MaxHorizontalMainBarCount; DataOUT.MinMainBarCount = MinMainBarCount; DataOUT.MaxMainBarCount = MaxMainBarCount;
+		DataOUT.Mn1_PerLayerCount = Mn1_PerLayerCount; DataOUT.Mn2_PerLayerCount = Mn2_PerLayerCount; DataOUT.Mn1_EffectiveDepthGuessC = Mn1_EffectiveDepthGuessC; DataOUT.Mn2_EffectiveDepthGuessC = Mn2_EffectiveDepthGuessC;
+		DataOUT.ReduceTn = ReduceTn; DataOUT.ReduceT = 0.75; DataOUT.HorizontalTorsionBarCount = HorizontalTorsionBarCount; DataOUT.VerticalTorsionBarCount = VerticalTorsionBarCount; DataOUT.TotalTorsionBarCount = TotalTorsionBarCount;
+
+
 	}
 	else {
 		// Reinforcement
 	}
 
-	return true;
+	return DataOUT;
 }
