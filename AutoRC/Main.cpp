@@ -333,10 +333,10 @@ OutPutData DataDesign(InPutData& DataIN) {
 	return DataOUT;
 }
 
-string DoDrawing(InPutData& DataOUT) {
+string DoDrawing(OutPutData& DataOUT) {
 	// 出圖
-	double h = DataOUT.h * enlarge, bw = DataOUT.bw * enlarge, limmitOfH = h + 50, limmitOfB = bw + 50;
-	int MainBarCount = 7;
+	double h = DataOUT.h * enlarge, bw = DataOUT.bw * enlarge, limmitOfH = h + 50., limmitOfB = bw + 50.;
+	int MainBarCount = DataOUT.Mn1_PerLayerCount[0];
 	double MainBarR = BarDiameter(DataOUT.MainBar) / 2. * enlarge, StirrupOfD = BarDiameter(DataOUT.Stirrup) * enlarge;
 	//需運算之值
 	double clearCover = DataOUT.cc * enlarge, clearcoverToCenter = clearCover + MainBarR;
