@@ -37,7 +37,7 @@ double Aoh(double bw, double h, double cc, int Stirrup) {
 }
 
 bool GeometryConfirmation(double Tu, double fc, double Acp, double Pcp) {
-	auto Tth = sqrt(fc) * (Acp / Pcp);
+	auto Tth = sqrt(fc) * (pow(Acp,2) / Pcp);
 	return 12000.0 * abs(Tu) >= 0.75 * Tth;
 }
 

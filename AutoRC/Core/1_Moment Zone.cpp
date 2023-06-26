@@ -22,6 +22,6 @@ double AsMinValue(double bw, double fc, double fy, double EffectiveDepth) {
 	return max({ As1, As2 });
 }
 
-double AsMaxValue(double bw, double EffectiveDepth, double Fyt) {
-	return bw * EffectiveDepth * Fyt;
+double AsMaxValue(double bw, double EffectiveDepth, double ReinforceRatio) {
+	return bw * EffectiveDepth * ReinforceRatio;
 }

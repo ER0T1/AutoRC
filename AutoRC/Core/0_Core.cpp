@@ -66,8 +66,8 @@ double Beff(double, double, double, double, double, bool);
 double AsMinValue(double, double, double, double);
 double AsMaxValue(double, double, double);
 double Moment(double, double, double, double, int, vector <double>, vector <int>, int, int, bool, vector <double>&, double&);
-double ReductionFactorMforOther(double, vector <double>);
-double ReductionFactorMforSpiral(double, vector <double>);
+double ReductionFactorMforOther(double, vector <double>&);
+double ReductionFactorMforSpiral(double, vector <double>&);
 
 // Shear Zone
 double Vc(double, double, double);
@@ -89,7 +89,7 @@ double TorsionBarDesignStrength(double, double, double, double, double, int, int
 // Other Zone
 double BarDiameter(int);
 double BarArea(int);
-double Fyt(int);
+double ReinforceRatio(int);
 double CalculateDL(double, double, double, double, double);
 double CalculateLL(double, double);
 
@@ -98,11 +98,14 @@ double CalculateLL(double, double);
 const double Lbin2Kft = 1. / 12. * 1E-3;
 
 OutPutData Core(InPutData& DataIN) {
+	cout << "a" << endl;
 	// bw, h Confirmation
+	// ACI318-19 18.6.2.1
 	if (DataIN.bw < 0.3 * DataIN.h || DataIN.bw < 10) {
 		cout << "Your beam has insufficient section dimensions, please increase the beam width!" << endl;
 	}
 	bool SkinRebar = false;
+	// ACI318-19 9.7.2.3
 	if (DataIN.h >= 36) {
 		SkinRebar = true;
 	}
@@ -121,6 +124,7 @@ OutPutData Core(InPutData& DataIN) {
 	auto Ll = CalculateLL(DataIN.Sw, DataIN.Ll);
 
 	// Geometry Confirmation ( Confirm whether torsion bars are required. )
+	// ACI318-14 22.7.1-22.7.4
 	if (GeometryConfirmation(DataIN.Tu, DataIN.fc, acp, pcp)) {
 		auto Ti = true;
 		//Section Size Confirmation
@@ -148,6 +152,7 @@ OutPutData Core(InPutData& DataIN) {
 		auto Tn = TorsionBarDesignStrength(DataIN.fy, aoh, Stirrup_For_Torsion, DataIN.TorsionBarGrade, ph, TorsionBarCount, DataIN.TorsionBar);
 		auto ReduceTn = 0.75 * Tn;
 
+		cout << "b" << endl;
 		// 除錯用
 		//cout << Tn << endl;
 		//cout << ReduceTn << endl;
@@ -156,7 +161,7 @@ OutPutData Core(InPutData& DataIN) {
 		auto MinMainBarSpace = min({ 4.0 / 3.0 * DataIN.dagg, BarDiameter(DataIN.MainBar), 1.0 });
 		auto MaxMainBarSpace = min({ 900000 / DataIN.fy - 2.5 * DataIN.cc,720000 / DataIN.fy });
 		auto MinMainBarQuantity = AsMinValue(DataIN.bw, DataIN.fc, DataIN.fy, EffectiveDepth);
-		auto MaxMainBarQuantity = AsMaxValue(DataIN.bw, EffectiveDepth, Fyt(DataIN.MainBarGrade));
+		auto MaxMainBarQuantity = AsMaxValue(DataIN.bw, EffectiveDepth, ReinforceRatio(DataIN.MainBarGrade));
 		int MinHorizontalMainBarCount = ceil((DataIN.bw - 2.0 * DataIN.cc - 2.0 * BarDiameter(DataIN.Stirrup) + MaxMainBarSpace) / (BarDiameter(DataIN.MainBar) + MaxMainBarSpace));
 		int MaxHorizontalMainBarCount = floor((DataIN.bw - 2.0 * DataIN.cc - 2.0 * BarDiameter(DataIN.Stirrup) + MinMainBarSpace) / (BarDiameter(DataIN.MainBar) + MinMainBarSpace));
 		int MinMainBarCount = ceil(MinMainBarQuantity / BarArea(DataIN.MainBar));
@@ -205,6 +210,7 @@ OutPutData Core(InPutData& DataIN) {
 
 		// 繫筋
 		int TieCount;
+		cout << "c" << endl;
 
 		do {
 			// 上層筋
@@ -225,7 +231,7 @@ OutPutData Core(InPutData& DataIN) {
 			}
 
 			// 除錯用
-			//cout << AllUpperCount << endl;
+			// cout << AllUpperCount << endl;
 
 			// 下層筋
 			if (LowerLayers == 1) {
@@ -246,7 +252,7 @@ OutPutData Core(InPutData& DataIN) {
 
 			// 除錯用
 			//cout << AllLowerCount << endl;
-				
+			cout << "d" << endl;
 			// 將每層筋支數合併為一個向量
 			Mn2_PerLayerCount = UpperEachLayerCount;
 			Mn2_PerLayerCount.insert(Mn2_PerLayerCount.end(), LowerEachLayerCount.rbegin(), LowerEachLayerCount.rend());
@@ -289,26 +295,31 @@ OutPutData Core(InPutData& DataIN) {
 			// Mn- 參數
 			Mn2_EPSILON.resize(Mn2_PerLayerCount.size());
 			// 計算Mn+及Mn-
+			cout << "d1" << endl;
 			Mn1 = Moment(DataIN.bw, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, false, Mn1_EPSILON, Mn1_COMPRESSIVESTRESSZONE);
+			cout << "d2" << endl;
 			Mn2 = -Moment(beff, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, false, Mn2_EPSILON, Mn2_COMPRESSIVESTRESSZONE);
 			// 計算Mpr+及Mpr-及Ve
-			Mpr1_EPSILON = Mn1_EPSILON; Mpr2_EPSILON = Mn2_EPSILON;
+			cout << "d3" << endl;
 			Mpr1 = Moment(DataIN.bw, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn1_EffectiveDepthGuessC, Mn1_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, true, Mpr1_EPSILON, Mpr1_COMPRESSIVESTRESSZONE);
+			cout << "d4" << endl;
 			Mpr2 = -Moment(beff, DataIN.h, DataIN.fc, DataIN.fy, DataIN.MainBar, Mn2_EffectiveDepthGuessC, Mn2_PerLayerCount, DataIN.TorsionBar, HorizontalTorsionBarCount, true, Mpr2_EPSILON, Mpr2_COMPRESSIVESTRESSZONE);
+			cout << "d5" << endl;
 			ve = Ve(DataIN.ln, Mpr1, Mpr2, DataIN.LoadFactorDL, DataIN.LoadFactorLL, Dl, Ll);
-			
+			cout << "d6" << endl;
 			// 計算撓曲折減係數
 			if (DataIN.Si == true) {
 				ReductionFactorMn1 = ReductionFactorMforSpiral(DataIN.fy, Mn1_EPSILON);
 				ReductionFactorMn2 = ReductionFactorMforSpiral(DataIN.fy, Mn2_EPSILON);
 			}
 			else {
+				cout << "d7" << endl;
 				ReductionFactorMn1 = ReductionFactorMforOther(DataIN.fy, Mn1_EPSILON);
 				ReductionFactorMn2 = ReductionFactorMforOther(DataIN.fy, Mn2_EPSILON);
 			}
 			ReduceMn1 = ReductionFactorMn1 * Mn1 * Lbin2Kft;
 			ReduceMn2 = ReductionFactorMn2 * Mn2 * Lbin2Kft;
-
+			cout << "e" << endl;
 			// 除錯用
 			//cout << "Mu+ = " << Mu1 << endl << "Mu- = " << Mu2 << endl << "φMn+ = " << ReduceMn1 << endl << "φMn- = " << ReduceMn2 << endl;
 			//for (int i = 0; i < Mn2_PerLayerCount.size(); i++) {
@@ -414,7 +425,7 @@ OutPutData Core(InPutData& DataIN) {
 				}
 			}
 		} while (Reinforcement);
-
+		cout << "f" << endl;
 		// 檢驗區
 		cout << "撓曲筋最小水平支數 = " << MinHorizontalMainBarCount << endl
 			<< "撓曲筋最大水平支數 = " << MaxHorizontalMainBarCount << endl
@@ -453,7 +464,7 @@ OutPutData Core(InPutData& DataIN) {
 		DataOUT.MinHorizontalMainBarCount = MinHorizontalMainBarCount; DataOUT.MaxHorizontalMainBarCount = MaxHorizontalMainBarCount; DataOUT.MinMainBarCount = MinMainBarCount; DataOUT.MaxMainBarCount = MaxMainBarCount;
 		DataOUT.Mn1_PerLayerCount = Mn1_PerLayerCount; DataOUT.Mn2_PerLayerCount = Mn2_PerLayerCount; DataOUT.Mn1_EffectiveDepthGuessC = Mn1_EffectiveDepthGuessC; DataOUT.Mn2_EffectiveDepthGuessC = Mn2_EffectiveDepthGuessC;
 		DataOUT.ReduceTn = ReduceTn; DataOUT.ReduceT = 0.75; DataOUT.HorizontalTorsionBarCount = HorizontalTorsionBarCount; DataOUT.VerticalTorsionBarCount = VerticalTorsionBarCount; DataOUT.TotalTorsionBarCount = TotalTorsionBarCount;
-
+		cout << "g" << endl;
 
 	}
 	else {

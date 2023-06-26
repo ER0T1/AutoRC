@@ -278,8 +278,9 @@ OutPutData DataDesign(InPutData& DataIN) {
 		else if (DataIN.cc > 3) {
 			cout << "It is recommended to set the cover thickness between 1.5 and 3 inches.\nWould you like to change the design? (Y/N)" << endl;
 			string ChangeClearCover;
-			while (bool ChangeClearCoverF = true) {
-				cin >> ChangeClearCover;
+			bool ChangeClearCoverF = true;
+			while (ChangeClearCoverF) {
+				//cin >> ChangeClearCover;
 				if (ChangeClearCover == "Y" || ChangeClearCover == "y" || ChangeClearCover == "Yes" || ChangeClearCover == "yes" || ChangeClearCover == "¬O") {
 					cout << "Please enter the Clear Cover thickness in inch." << endl;
 					ChangeClearCoverF = false;

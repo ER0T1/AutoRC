@@ -50,7 +50,7 @@ double BarArea(int BarsSize) {        // in^2
 	}
 }
 
-double Fyt(int Grade) {
+double ReinforceRatio(int Grade) {
 	if (Grade == 60) {
 		return 0.025;
 	}

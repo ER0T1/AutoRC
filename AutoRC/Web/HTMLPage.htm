@@ -138,8 +138,17 @@
                             }, function (data) {
                                 console.log(data);
                                 $("#dataSVG").html(data.SVG);
-                                $("#dataMu1").html(data.Mu1);
-                                $("#dataMu2").html(data.Mu2);
+                                $("#ReduceMn1").html(data.ReduceMn1);
+                                $("#ReduceMn2").html(data.ReduceMn2);
+                                $("#ReduceTn").html(data.ReduceTn);
+                                $("#ReduceT").html(data.ReduceT);
+                                $("#ReductionFactorMn1").html(data.ReductionFactorMn1);
+                                $("#ReductionFactorMn2").html(data.ReductionFactorMn2);
+                                $("#Mu1").html(data.Mu1);
+                                $("#Mu2").html(data.Mu2);
+                                $("#Vu1").html(data.Vu1);
+                                $("#Vu2").html(data.Vu2);
+                                $("#Tu").html(data.Tu);
                             });
                         });
                     </script>
@@ -155,14 +164,36 @@
                 <!--output information -->
                 <table>
                     <tr>
-                        <th>Mu+</th>
-                        <th>Mu-</th>
-                        <th>fi</th>
+                        <th>∅Mn+</th>
+                        <th>∅Mn-</th>
+                        <th>∅Vn</th>
+                        <th>∅Tn</th>
+                        <th>∅m+</th>
+                        <th>∅m-</th>
+                        <th>∅v</th>
+                        <th>∅t</th>
                     </tr>
                     <tr>
+                        <td id="ReduceMn1"></td>
+                        <td id="ReduceMn2"></td>
                         <td></td>
+                        <td id="ReduceTn"></td>
+                        <td id="ReductionFactorMn1"></td>
+                        <td id="ReductionFactorMn2"></td>
                         <td></td>
-                        <td>o.9</td>
+                        <td id="ReduceT"></td>
+                    </tr>
+                    <tr>
+                        <th>Mu+</th>
+                        <th>Mu-</th>
+                        <th>Vu</th>
+                        <th>Tu</th>
+                    </tr>
+                    <tr>
+                        <td id="Mu1"></td>
+                        <td id="Mu2"></td>
+                        <td id="Vu1"></td>
+                        <td id="Tu"></td>
                     </tr>
                 </table>
                 <!--output information -->
