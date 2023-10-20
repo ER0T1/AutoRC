@@ -1,0 +1,257 @@
+<HTML>
+<HEAD>
+    <meta charset='utf-8' />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+    <!-- using jQuery library for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</HEAD>
+<BODY>
+    <h1>RC design and visualize</h1>
+    <hr>
+
+    <table style="width:100%"><!-- HTML主結構 -->
+        <tr>
+            <th style="width:30%">
+                <!-- 輸入資訊 -->
+                <form>
+                    <!-- 梁寬 -->
+                    <label for="setting">Beam Width :</label>
+                    <input type="text" id="bw" name="bw" value="21"> in<br>
+                    <!-- 梁深 -->
+                    <label for="setting">Beam Height :</label>
+                    <input type="text" id="h" name="h" value="28"> in<br>
+                    <!-- 梁長 -->
+                    <label for="setting">Beam Length :</label>
+                    <input type="text" id="ln" name="ln" value="20"> ft<br>
+                    <!-- 版寬 -->
+                    <label for="setting">Slab Width :</label>
+                    <input type="text" id="Sw" name="Sw" value="21"> ft<br>
+                    <!-- 版厚 -->
+                    <label for="setting">Slab Thickness :</label>
+                    <input type="text" id="hf" name="hf" value="12"> in<br>
+                    <!-- T梁翼版 -->
+                    <label for="setting">bf :</label>
+                    <input type="text" id="bf" name="bf" value="84"> in<br>
+                    <!-- 梁類型 -->
+                    <label for="BeamType">Beam Type : </label>
+                    <select id="BeamType" name="BeamType">
+                        <option value="0" selected>Middle Beam</option>
+                        <option value="1">Side Beam</option>
+                    </select><br>
+                    <!-- 架構類型 -->
+                    <label for="SDC">SDC : </label>
+                    <select id="SDC" name="SDC">
+                        <option value="0" selected>A</option>
+                        <option value="1">B</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
+                        <option value="4">E</option>
+                        <option value="5">F</option>
+                    </select><br>
+                    <!-- 撓曲 -->
+                    <label for="setting">Mu+ :</label>
+                    <input type="text" id="Mu1" name="Mu1" value="150"> kips-ft<br>
+                    <label for="setting">Mu- :</label>
+                    <input type="text" id="Mu2" name="Mu2" value="-300"> kips-ft<br>
+                    <!-- 剪力 -->
+                    <label for="setting">Vu+ :</label>
+                    <input type="text" id="Vu1" name="Vu1" value="65"> kips<br>
+                    <label for="setting">Vu- :</label>
+                    <input type="text" id="Vu2" name="Vu2" value="-70"> kips<br>
+                    <!-- 扭矩 -->
+                    <label for="setting">Tu+ :</label>
+                    <input type="text" id="Tu1" name="Tu1" value="60"> kips<br>
+                    <label for="setting">Tu- :</label>
+                    <input type="text" id="Tu2" name="Tu2" value="-60"> kips<br>
+                    <!-- 混凝土設計強度 -->
+                    <label for="setting">fc' :</label>
+                    <input type="text" id="fc" name="fc" value="4"> ksi<br>
+                    <!-- 撓曲主筋號數 -->
+                    <label for="MainBar">Size of main Reinforcement :  </label>
+                    <select id="MainBar" name="MainBar">
+                        <option value="" selected>Size of main Reinforcement</option>
+                        <option value="6">No.6</option>
+                        <option value="7">No.7</option>
+                        <option value="8">No.8</option>
+                        <option value="9">No.9</option>
+                        <option value="10">No.10</option>
+                        <option value="11">No.11</option>
+                    </select><br>
+                    <!-- 撓曲主筋標稱降伏強度 -->
+                    <label for="MainBarGrade">Grade of main Reinforcement :  </label>
+                    <select id="MainBarGrade" name="MainBarGrade">
+                        <option value="" selected>Grade of main Reinforcement</option>
+                        <option value="60">Gr.60</option>
+                        <option value="80">Gr.80</option>
+                    </select><br>
+                    <!-- 箍筋號數 -->
+                    <label for="Size of Stirrups">Size of Stirrups : </label>
+                    <select id="Stirrup" name="Size of Stirrups">
+                        <option value="" selected>Size of Stirrups </option>
+                        <option value="3">No.3</option>
+                        <option value="4">No.4</option>
+                        <option value="5">No.5</option>
+                    </select><br>
+                    <!-- 箍筋標稱降伏強度 -->
+                    <label for="StirrupGrade">Grade of Stirrup :  </label>
+                    <select id="StirrupGrade" name="StirrupGrade">
+                        <option value="" selected>Grade of Stirrup</option>
+                        <option value="40">Gr.40</option>
+                        <option value="60">Gr.60</option>
+                    </select><br>
+                    <!-- 撓曲主筋標稱降伏強度 -->
+                    <label for="TorsionBar">Size of Torsion Bar :  </label>
+                    <select id="TorsionBar" name="TorsionBar">
+                        <option value="" selected>Size of Torsion Bar</option>
+                        <option value="5">No.5</option>
+                        <option value="6">No.6</option>
+                        <option value="7">No.7</option>
+                        <option value="8">No.8</option>
+                    </select><br>
+                    <!-- 扭矩主筋號數 -->
+                    <label for="TorsionBarGrade">Grade of Torsion Bar :  </label>
+                    <select id="TorsionBarGrade" name="TorsionBarGrade">
+                        <option value="" selected>Grade of Torsion Bar</option>
+                        <option value="60">Gr.60</option>
+                        <option value="80">Gr.80</option>
+                    </select><br>
+                    <!-- 保護層厚度 -->
+                    <label for="setting">Clear Cover :</label>
+                    <input type="text" id="cc" name="cc" value="3"> in<br>
+                    <!-- 箍筋間距 -->
+                    <label for="SpacementOfStirrups">Spacement of Stirrups : </label>
+                    <input type="text" id="Spacement" name="S of Stirrups" value="5"> in<br>
+                    <!-- 死載重 -->
+                    <label for="setting">Dead Load :</label>
+                    <input type="text" id="Dl" name="Dl" value="150"> psi/ft^3<br>
+                    <!-- 活載重 -->
+                    <label for="setting">Live Load :</label>
+                    <input type="text" id="Ll" name="Ll" value="40"> psi/ft^3<br>
+
+                    <button id='RunMain'>Run</button>
+                    <span id="result"></span>
+                    <script>
+                        $('#RunMain').click(function (e) {
+                            e.preventDefault();
+                            let bw = $('#bw').val();
+                            let h = $('#h').val();
+                            let ln = $('#ln').val();
+                            let Sw = $('#Sw').val();
+                            let hf = $('#hf').val();
+                            let bf = $('#bf').val();
+                            let Mu1 = $('#Mu1').val();
+                            let Mu2 = $('#Mu2').val();
+                            let Vu1 = $('#Vu1').val();
+                            let Vu2 = $('#Vu2').val();
+                            let Vu = $('#Vu').val();
+                            let Tu1 = $('#Tu1').val();
+                            let Tu2 = $('#Tu2').val();
+                            let Tu = $('#Tu').val();
+                            let fc = $('#fc').val();
+                            let MainBar = $('#MainBar').val();
+                            let TorsionBar = $('#TorsionBar').val();
+                            let Stirrup = $('#Stirrup').val();
+                            let MainBarGrade = $('#MainBarGrade').val();
+                            let StirrupGrade = $('#StirrupGrade').val();
+                            let TorsionBarGrade = $('#TorsionBarGrade').val();
+                            let cc = $('#cc').val();
+                            let BeamType = $('#BeamType').val();
+                            let SDC = $('#SDC').val();
+                            let Dl = $('#Dl').val();
+                            let Ll = $('#Ll').val();
+                            $.post("/Initialization", {
+                                bw: bw,
+                                h: h,
+                                ln: ln,
+                                Sw: Sw,
+                                hf: hf,
+                                bf:bf,
+                                Mu1: Mu1,
+                                Mu2: Mu2,
+                                Vu1: Vu1,
+                                Vu2: Vu2,
+                                Vu: Vu,
+                                Tu1: Tu1,
+                                Tu2: Tu2,
+                                Tu: Tu,
+                                fc: fc,
+                                MainBar: MainBar,
+                                Stirrup: Stirrup,
+                                TorsionBar: TorsionBar,
+                                MainBarGrade: MainBarGrade,
+                                StirrupGrade: StirrupGrade,
+                                TorsionBarGrade: TorsionBarGrade,
+                                cc, cc,
+                                BeamType: BeamType,
+                                SDC: SDC,
+                                Dl: Dl,
+                                Ll: Ll,
+                            }, function (data) {
+                                console.log(data);
+                                $("#dataSVG").html(data.SVG);
+                                $("#ReduceMn1").html(data.ReduceMn1);
+                                $("#ReduceMn2").html(data.ReduceMn2);
+                                $("#ReduceTn").html(data.ReduceTn);
+                                $("#ReduceT").html(data.ReduceT);
+                                $("#ReductionFactorMn1").html(data.ReductionFactorMn1);
+                                $("#ReductionFactorMn2").html(data.ReductionFactorMn2);
+                                $("#Mu1").html(data.Mu1);
+                                $("#Mu2").html(data.Mu2);
+                                $("#Vu").html(data.Vu);
+                                $("#Tu").html(data.Tu);
+                            });
+                        });
+                    </script>
+
+                    <!--input setting -->
+                </form>
+            </th>
+            <th rowspan="2" id="dataSVG">
+                <!--output picture -->
+            </th>
+        <tr>
+            <th style="background-color: none">
+                <!--output information -->
+                <table>
+                    <tr>
+                        <th>∅Mn+</th>
+                        <th>∅Mn-</th>
+                        <th>∅Vn</th>
+                        <th>∅Tn</th>
+                        <th>∅m+</th>
+                        <th>∅m-</th>
+                        <th>∅v</th>
+                        <th>∅t</th>
+                    </tr>
+                    <tr>
+                        <td id="ReduceMn1"></td>
+                        <td id="ReduceMn2"></td>
+                        <td></td>
+                        <td id="ReduceTn"></td>
+                        <td id="ReductionFactorMn1"></td>
+                        <td id="ReductionFactorMn2"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Mu+</th>
+                        <th>Mu-</th>
+                        <th>Vu</th>
+                        <th>Tu</th>
+                    </tr>
+                    <tr>
+                        <td id="Mu1"></td>
+                        <td id="Mu2"></td>
+                        <td id="Vu"></td>
+                        <td id="Tu"></td>
+                    </tr>
+                </table>
+                <!--output information -->
+            </th>
+        </tr>
+    </table>
+
+
+</BODY>
+</html>

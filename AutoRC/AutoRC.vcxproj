@@ -19,20 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\0_1_Stirrup.cpp" />
-    <ClCompile Include="Core\0_Core.cpp" />
-    <ClCompile Include="Core\1_1_CalculateM.cpp" />
-    <ClCompile Include="Core\1_Moment Zone.cpp" />
-    <ClCompile Include="Core\2_Shear Zone.cpp" />
-    <ClCompile Include="Core\3_Torsion Zone.cpp" />
-    <ClCompile Include="Core\4_Other Zone.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Server\0_Core.cpp" />
+    <ClCompile Include="Server\1_Moment Zone.cpp" />
+    <ClCompile Include="Server\2_Shear Zone.cpp" />
+    <ClCompile Include="Server\3_Torsion Zone.cpp" />
+    <ClCompile Include="Server\4_Other Zone.cpp" />
+    <ClCompile Include="Server\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web\HTMLPage.htm">
+    <ClInclude Include="Server\AutoRC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Website\HTMLPage.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Web\StyleSheet.css" />
+    <None Include="Website\StyleSheet.css" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
