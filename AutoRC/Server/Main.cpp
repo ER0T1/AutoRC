@@ -1,4 +1,4 @@
-// v 0.23.10.20
+// v 0.23.11.09
 
 #define _WIN32_WINNT 0x0600
 #pragma warning( disable : 4267 4244 26495)
@@ -35,7 +35,7 @@ const auto port = 18080;
 
 int main() {
 	SimpleApp app;
-	mustache::set_global_base("web");
+	mustache::set_global_base("Website");
 
 	CROW_ROUTE(app, "/")([]() {
 		auto Page = mustache::load_text("HTMLPage.htm");
@@ -101,9 +101,11 @@ int main() {
 		auto MainBar = data.get("MainBar");
 		auto Stirrup = data.get("Stirrup");
 		auto TorsionBar = data.get("TorsionBar");
+		auto stirrupSpacing = data.get("SpacementOfStirrups");
 		if (MainBar) Data.MainBar = atoi(MainBar);
 		if (Stirrup) Data.Stirrup = atoi(Stirrup);
 		if (TorsionBar) Data.TorsionBar = atoi(TorsionBar);
+		if (stirrupSpacing) Data.stirrupSpacing = strtod(stirrupSpacing, NULL);
 		// 輸入材料強度:
 		auto MainBarGrade = data.get("MainBarGrade");
 		auto StirrupGrade = data.get("StirrupGrade");

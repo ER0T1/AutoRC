@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include "AutoRC.h"
 using namespace std;
 
@@ -94,4 +95,65 @@ double CalculateDL(double Sw, double bw, double h, double hf, double Dl) {
 
 double CalculateLL(double Sw, double Ll) {
 	return Sw * Ll / 12000.;
+}
+
+void Coordinate(RcData& Data) {
+	// 撓曲主筋水平座標
+	auto MainBarSpacing = (Data.bw - (Data.cc * 2.) - BarDiameter(Data.MainBar)) / double(Data.leading - 1);
+	int MainBarCount = ceil(Data.leading / 2.);
+	Data.Coordinate.MainBar_H.resize(MainBarCount);
+	if (Data.leading == Data.UpperEachLayerCount[0]) {
+		if (Data.OddAllowed == false) {
+			for (int i = 0; i < MainBarCount; ++i) {
+				if (i == 0)Data.Coordinate.MainBar_H[i] = MainBarSpacing / 2.;
+				else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+			}
+		}
+		else {
+			for (int i = 0; i < MainBarCount; ++i) {
+				if (i == 0)Data.Coordinate.MainBar_H[i] = 0.;
+				else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+			}
+		}
+	}
+	else {
+		if (Data.OddAllowed == false) {
+			for (int i = 0; i < MainBarCount; ++i) {
+				if (i == 0)Data.Coordinate.MainBar_H[i] = MainBarSpacing / 2.;
+				else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+			}
+		}
+		else {
+			for (int i = 0; i < MainBarCount; ++i) {
+				if (i == 0)Data.Coordinate.MainBar_H[i] = 0.;
+				else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+			}
+		}
+	}
+	// 撓曲主筋垂直座標
+	Data.Coordinate.MainBar_V = Data.PerLayerDMn2;
+	// 扭矩主筋水平座標
+	Data.Coordinate.TorsionBar_H = (Data.bw / 2.) - Data.cc - (BarDiameter(Data.TorsionBar) / 2.);
+	// 扭矩主筋垂直座標
+	auto TorsionBarSpacing = Data.h - (Data.cc * 2.) - (BarDiameter(Data.Stirrup) * 2.) - (BarDiameter(Data.MainBar) * 2.) / double(Data.VerticalTorsionBarCount - 1);
+	for (int i = 0; i < Data.VerticalTorsionBarCount - 2; ++i) {
+		if (i == 0)Data.Coordinate.TorsionBar_V[i] = Data.cc + BarDiameter(Data.Stirrup) + BarDiameter(Data.MainBar) + TorsionBarSpacing;
+		else Data.Coordinate.TorsionBar_V[i] += TorsionBarSpacing;
+	}
+	// 腳水平座標
+	int LegsCount = ceil(Data.legs / 2.);
+	if (Data.OddAllowed == false) {
+		for (int i = 0; i < LegsCount; ++i) {
+			if (i == 0)Data.Coordinate.MainBar_H[i] = MainBarSpacing / 2.;
+			else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+		}
+	}
+	else {
+		for (int i = 0; i < MainBarCount; ++i) {
+			if (i == 0)Data.Coordinate.MainBar_H[i] = 0.;
+			else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+		}
+	}
+
+	// 用布林值
 }

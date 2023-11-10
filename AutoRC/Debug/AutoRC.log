@@ -1,4 +1,2 @@
-﻿  0_Core.cpp
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\Server\0_Core.cpp(1,1): warning C4828: 檔案包含起始於位移 0xada 的字元，在目前的來源字元集 (字碼頁 950) 中不是合法的字元。
-C:\Users\eroti\Desktop\AutoRC\AutoRC\AutoRC\Server\0_Core.cpp(58,112): warning C4244: '引數': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+﻿  Main.cpp
   AutoRC.vcxproj -> C:\Users\eroti\Desktop\AutoRC\AutoRC\Debug\AutoRC.exe

@@ -137,6 +137,12 @@ struct RcData {
 	// 是否為強震區
 	bool isEarthquakeArea;
 
+	struct {
+		vector <double> MainBar_H, legs_H;
+		int TorsionBar_H;
+		vector <double> MainBar_V, TorsionBar_V;
+	}Coordinate;
+
 	// 單位換算用, 未完成
 	// string ForceMultLength{}; string Force{}; string Length{};
 };

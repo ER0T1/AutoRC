@@ -58,7 +58,7 @@ bool CrossSectionalDimensionsConfirmationForTorsion(double Vu, double Tu, double
 
 // ACI 318-19 22.7.6.1a 反算
 double At_s(double Tu, double fyt, double ao, double ForTorsion) {
-	return Tu / ForTorsion / 2. / ao / fyt * tan(PI / 2.);
+	return Tu / ForTorsion / 2. / ao / fyt * tan(PI / 4.);
 }
 
 // 扭矩主筋設計量
@@ -100,8 +100,8 @@ void TorsionBarCountDesign(RcData& Data) {
 
 // ACI 318-19 22.7.6.1
 double TorsionBarDesignStrength(double fy, double fyt, double ao, double ph, double at_s, int al) {
-	auto a = 2 * ao * at_s * fyt;
-	auto b = 2 * ao * al * fy / ph;
+	auto a = 2 * ao * at_s * fyt / tan(PI / 4.);
+	auto b = 2 * ao * al * fy / ph * tan(PI / 4.);
 	return min({ a, b });
 }
 

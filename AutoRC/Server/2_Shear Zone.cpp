@@ -121,4 +121,5 @@ bool StirrupDesign(RcData& Data) {
 		return false;
 	}
 
+	return true;
 }

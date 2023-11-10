@@ -121,7 +121,7 @@
                     <input type="text" id="cc" name="cc" value="3"> in<br>
                     <!-- 箍筋間距 -->
                     <label for="SpacementOfStirrups">Spacement of Stirrups : </label>
-                    <input type="text" id="Spacement" name="S of Stirrups" value="5"> in<br>
+                    <input type="text" id="SpacementOfStirrups" name="SpacementOfStirrups" value="5"> in<br>
                     <!-- 死載重 -->
                     <label for="setting">Dead Load :</label>
                     <input type="text" id="Dl" name="Dl" value="150"> psi/ft^3<br>
@@ -152,6 +152,7 @@
                             let MainBar = $('#MainBar').val();
                             let TorsionBar = $('#TorsionBar').val();
                             let Stirrup = $('#Stirrup').val();
+                            let SpacementOfStirrups = $('#SpacementOfStirrups').val();
                             let MainBarGrade = $('#MainBarGrade').val();
                             let StirrupGrade = $('#StirrupGrade').val();
                             let TorsionBarGrade = $('#TorsionBarGrade').val();
@@ -179,6 +180,7 @@
                                 MainBar: MainBar,
                                 Stirrup: Stirrup,
                                 TorsionBar: TorsionBar,
+                                SpacementOfStirrups: SpacementOfStirrups,
                                 MainBarGrade: MainBarGrade,
                                 StirrupGrade: StirrupGrade,
                                 TorsionBarGrade: TorsionBarGrade,
