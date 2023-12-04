@@ -135,6 +135,7 @@ void Coordinate(RcData& Data) {
 	// 扭矩主筋水平座標
 	Data.Coordinate.TorsionBar_H = (Data.bw / 2.) - Data.cc - (BarDiameter(Data.TorsionBar) / 2.);
 	// 扭矩主筋垂直座標
+	Data.Coordinate.TorsionBar_V.resize(Data.VerticalTorsionBarCount - 2);
 	auto TorsionBarSpacing = Data.h - (Data.cc * 2.) - (BarDiameter(Data.Stirrup) * 2.) - (BarDiameter(Data.MainBar) * 2.) / double(Data.VerticalTorsionBarCount - 1);
 	for (int i = 0; i < Data.VerticalTorsionBarCount - 2; ++i) {
 		if (i == 0)Data.Coordinate.TorsionBar_V[i] = Data.cc + BarDiameter(Data.Stirrup) + BarDiameter(Data.MainBar) + TorsionBarSpacing;
@@ -142,16 +143,41 @@ void Coordinate(RcData& Data) {
 	}
 	// 腳水平座標
 	int LegsCount = ceil(Data.legs / 2.);
+	int limit = ceil(Data.depend / 2.);
+	Data.Coordinate.legs_H.resize(MainBarCount);
 	if (Data.OddAllowed == false) {
-		for (int i = 0; i < LegsCount; ++i) {
-			if (i == 0)Data.Coordinate.MainBar_H[i] = MainBarSpacing / 2.;
-			else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+		for (int i = 0; i < MainBarCount; i += 2) {
+			Data.Coordinate.legs_H[i] = true;
+		}
+		Data.Coordinate.legs_H[MainBarCount - 1] = true;
+		if (LegsCount > limit) {
+			for (int i = 1; i <= LegsCount - limit; ++i) {
+				Data.Coordinate.legs_H[2 * i - 1] = true;
+			}
 		}
 	}
 	else {
-		for (int i = 0; i < MainBarCount; ++i) {
-			if (i == 0)Data.Coordinate.MainBar_H[i] = 0.;
-			else Data.Coordinate.MainBar_H[i] += MainBarSpacing;
+		if (Data.depend % 4 == 3) {
+			for (int i = 1; i < MainBarCount; i += 2) {
+				Data.Coordinate.legs_H[i] = true;
+			}
+			if (Data.legs % 2 == 0) {
+				Data.Coordinate.legs_H[0] = false;
+			}
+			for (int i = 1; i < LegsCount - limit; ++i) {
+				Data.Coordinate.legs_H[2 * i] = true;
+			}
+		}
+		else {
+			for (int i = 2; i < MainBarCount; i += 2) {
+				Data.Coordinate.legs_H[i] = true;
+			}
+			if (Data.legs % 2 == 0) {
+				Data.Coordinate.legs_H[0] = false;
+			}
+			for (int i = 1; i < LegsCount - limit; ++i) {
+				Data.Coordinate.legs_H[2 * i - 1] = true;
+			}
 		}
 	}
 

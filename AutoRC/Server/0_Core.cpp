@@ -64,6 +64,7 @@ void Core(RcData& Data) {
 
 		// ≥]≠p„Tµ¨
 		StirrupDesign(Data);
+		Coordinate(Data);
 		cout << Data.cc << endl;
 	}
 	else {

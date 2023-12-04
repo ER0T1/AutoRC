@@ -87,7 +87,7 @@ struct RcData {
 	// 設計強度: 箍筋抗剪強度 lb
 	double vsMin;
 	// 上下層筋哪一層主導
-	int leading;
+	int leading, depend;
 
 	// 材料資訊: 鋼筋保護層厚度
 	double cc;
@@ -138,8 +138,9 @@ struct RcData {
 	bool isEarthquakeArea;
 
 	struct {
-		vector <double> MainBar_H, legs_H;
+		vector <double> MainBar_H;
 		int TorsionBar_H;
+		vector <bool> legs_H;
 		vector <double> MainBar_V, TorsionBar_V;
 	}Coordinate;
 
@@ -197,3 +198,4 @@ double BarDiameter(int BarsSize);
 double BarArea(int BarsSize);
 double ReinforceRatio(double Grade);
 bool IsEarthquakeArea(RcData::_SDC_& SDC);
+void Coordinate(RcData& Data);

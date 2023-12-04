@@ -204,6 +204,7 @@ void Reinforcement(RcData& Data) {
 			if (Data.UpperEachLayerCount[0] >= Data.LowerEachLayerCount[0]) {
 				Data.legsMin = LegsMin(Data.UpperEachLayerCount[0]);
 				Data.leading = Data.UpperEachLayerCount[0];
+				Data.depend = Data.LowerEachLayerCount[0];
 				if (Data.UpperEachLayerCount[0] % 2 != 0) {
 					if (Data.LowerEachLayerCount[0] >= Data.legsMin) {
 						Data.legsMax = Data.LowerEachLayerCount[0];
@@ -227,6 +228,7 @@ void Reinforcement(RcData& Data) {
 			else {
 				Data.legsMin = LegsMin(Data.LowerEachLayerCount[0]);
 				Data.leading = Data.LowerEachLayerCount[0];
+				Data.depend = Data.UpperEachLayerCount[0];
 				if (Data.LowerEachLayerCount[0] % 2 != 0) {
 					if (Data.UpperEachLayerCount[0] >= Data.legsMin) {
 						Data.legsMax = Data.UpperEachLayerCount[0];
