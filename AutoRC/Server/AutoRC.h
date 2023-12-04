@@ -1,16 +1,18 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "crow.h"
 using namespace std;
 
-const double PI = 3.14159265358979;
-const double kft2lbin = 12000.;
-const double lbin2kft = 1. / 12. * 1E-3;
-const double kips2lb = 1000.;
-const double lb2kips = 1E-3;
-const double ft2in = 12.;
-const double in2ft = 1. / 12.;
-const double Ec = 29000000.; 
+const auto PI = 3.14159265358979;
+const auto kft2lbin = 12000.;
+const auto lbin2kft = 1. / 12. * 1E-3;
+const auto kips2lb = 1000.;
+const auto lb2kips = 1E-3;
+const auto ft2in = 12.;
+const auto in2ft = 1. / 12.;
+const auto Ec = 29000000.;
+const auto enlarge = 15.;
 
 struct RcData {
 	double Mu1;							// 容許強度: 撓曲 lb-in		Allowable Strength: Bending Moment lb-in
@@ -88,6 +90,7 @@ struct RcData {
 	double vsMin;
 	// 上下層筋哪一層主導
 	int leading, depend;
+	bool leader; // true 上層筋, false 下層筋
 
 	// 材料資訊: 鋼筋保護層厚度
 	double cc;
@@ -141,6 +144,7 @@ struct RcData {
 		vector <double> MainBar_H;
 		int TorsionBar_H;
 		vector <bool> legs_H;
+		vector <bool> MainBarDepend_H;
 		vector <double> MainBar_V, TorsionBar_V;
 	}Coordinate;
 
@@ -149,9 +153,8 @@ struct RcData {
 };
 
 // Main Zone
-
-void DataDesign(RcData& Data);
 void Core(RcData& Data);
+crow::json::wvalue Struct2Json(RcData& Data);
 
 // Moment Zone
 
@@ -199,3 +202,4 @@ double BarArea(int BarsSize);
 double ReinforceRatio(double Grade);
 bool IsEarthquakeArea(RcData::_SDC_& SDC);
 void Coordinate(RcData& Data);
+string Drawing(RcData& Data);

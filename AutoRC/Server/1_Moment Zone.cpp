@@ -203,6 +203,7 @@ void Reinforcement(RcData& Data) {
 		if (Data.reductionMn1 >= Data.Mu1 && Data.reductionMn2 <= Data.Mu2) {
 			if (Data.UpperEachLayerCount[0] >= Data.LowerEachLayerCount[0]) {
 				Data.legsMin = LegsMin(Data.UpperEachLayerCount[0]);
+				Data.leader = true;
 				Data.leading = Data.UpperEachLayerCount[0];
 				Data.depend = Data.LowerEachLayerCount[0];
 				if (Data.UpperEachLayerCount[0] % 2 != 0) {
@@ -227,6 +228,7 @@ void Reinforcement(RcData& Data) {
 			}
 			else {
 				Data.legsMin = LegsMin(Data.LowerEachLayerCount[0]);
+				Data.leader = false;
 				Data.leading = Data.LowerEachLayerCount[0];
 				Data.depend = Data.UpperEachLayerCount[0];
 				if (Data.LowerEachLayerCount[0] % 2 != 0) {

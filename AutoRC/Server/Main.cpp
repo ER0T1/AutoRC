@@ -122,17 +122,46 @@ int main() {
 		if (Ll) Data.Ll = strtod(Ll, NULL);
 
 		// ³]­p¶¥¬q:
-		DataDesign(Data);
-		/*auto Design = Struct2Json(DataOUT);
-		Design["SVG"] = DoDrawing(DataOUT);
-		return Design;*/
-		return 0;
+		Core(Data);
+		auto Design = Struct2Json(Data);
+		Design["SVG"] = Drawing(Data);
+		return Design;
 		});
 
 	app.port(port).run();
 	return 0;
 }
 
-void DataDesign(RcData& Data) {
-	Core(Data);
+crow::json::wvalue Struct2Json(RcData& Data) {
+	crow::json::wvalue WebData;
+	WebData["Mu1"] = Data.Mu1;
+	WebData["Mu2"] = Data.Mu2;
+	WebData["Vu1"] = Data.Vu1;
+	WebData["Vu2"] = Data.Vu2;
+	WebData["Tu"] = Data.Tu;
+	WebData["Sw"] = Data.Sw;
+	WebData["bw"] = Data.bw;
+	WebData["hf"] = Data.hf;
+	WebData["h"] = Data.h;
+	WebData["bf"] = Data.bf;
+	WebData["ln"] = Data.ln;
+	WebData["fc"] = Data.fc;
+	WebData["Dl"] = Data.Dl;
+	WebData["Ll"] = Data.Ll;
+	WebData["LoadFactorDL"] = Data.LoadFactorDL;
+	WebData["LoadFactorLL"] = Data.LoadFactorLL;
+	WebData["MainBar"] = Data.MainBar;
+	WebData["Stirrup"] = Data.Stirrup;
+	WebData["TorsionBar"] = Data.TorsionBar;
+	WebData["cc"] = Data.cc;
+	WebData["MainBarGrade"] = Data.MainBarGrade;
+	WebData["StirrupGrade"] = Data.StirrupGrade;
+	WebData["TorsionBarGrade"] = Data.TorsionBarGrade;
+	WebData["dagg"] = Data.dagg;
+	WebData["ReduceMn1"] = Data.reductionMn1;
+	WebData["ReduceMn2"] = Data.reductionMn2;
+	WebData["ReductionFactorMn1"] = Data.ReductionFactors.ForMoment_1;
+	WebData["ReductionFactorMn2"] = Data.ReductionFactors.ForMoment_2;
+	WebData["ReduceTn"] = Data.reductionTn;
+	return WebData;
 }
