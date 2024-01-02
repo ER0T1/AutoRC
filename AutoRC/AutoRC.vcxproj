@@ -24,6 +24,7 @@
     <ClCompile Include="Server\2_Shear Zone.cpp" />
     <ClCompile Include="Server\3_Torsion Zone.cpp" />
     <ClCompile Include="Server\4_Other Zone.cpp" />
+    <ClCompile Include="Server\5_Drawing.cpp" />
     <ClCompile Include="Server\Main.cpp" />
   </ItemGroup>
   <ItemGroup>

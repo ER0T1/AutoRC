@@ -7,7 +7,7 @@
 using namespace std;
 
 // ACI 318-19 6.3.2.1
-double Beff(double bw, double Sw, double hf, double ln, double bf, RcData::_BeamType_& BeamType) {
+double Beff(double bw, double Sw, double hf, double ln, RcData::_BeamType_& BeamType) {
 	//獨立T梁
 	//if (hf >= 0.5 * bw) {
 	//	return min({ bf, 4 * bw });
@@ -95,7 +95,7 @@ double Moment(double bwbeff, double h, double fc, double fy, int MainBar, vector
 	CompressiveStressZone = h / 2.;
 	double TotalForce;
 	epsilon.resize(PerLayerCount.size());
-	vector <double> Fy(PerLayerCount.size());
+	vector <double> Fy(PerLayerCount.size());	// 鋼筋受力
 	// 執行猜C
 	do {
 		TotalForce = 0.85 * fc * Beta * CompressiveStressZone * bwbeff;
@@ -209,7 +209,12 @@ void Reinforcement(RcData& Data) {
 				if (Data.UpperEachLayerCount[0] % 2 != 0) {
 					if (Data.LowerEachLayerCount[0] >= Data.legsMin) {
 						Data.legsMax = Data.LowerEachLayerCount[0];
-						Data.OddAllowed = true;
+						if (Data.LowerEachLayerCount[0] % 2 == 0) {
+							Data.OddAllowed = false;
+						}
+						else {
+							Data.OddAllowed = true;
+						}
 						break;
 					}
 					else LowerCount1 = Data.legsMin;
@@ -234,7 +239,12 @@ void Reinforcement(RcData& Data) {
 				if (Data.LowerEachLayerCount[0] % 2 != 0) {
 					if (Data.UpperEachLayerCount[0] >= Data.legsMin) {
 						Data.legsMax = Data.UpperEachLayerCount[0];
-						Data.OddAllowed = true;
+						if (Data.UpperEachLayerCount[0] % 2 == 0) {
+							Data.OddAllowed = false;
+						}
+						else {
+							Data.OddAllowed = true;
+						}
 						break;
 					}
 					else UpperCount1 = Data.legsMin;

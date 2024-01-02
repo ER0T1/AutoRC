@@ -28,7 +28,7 @@ struct RcData {
 	double Sw;							// ¤Ø¤o¸ê°T: ª©¼e in
 	double bw;							// ¤Ø¤o¸ê°T: ±ç¼e in
 	double beff;						// ¤Ø¤o¸ê°T: ¦³®ÄÁlªO¼e in
-	double bf = 84;						// ¤Ø¤o¸ê°T: T±çÁlªO¼e in
+	// double bf = 84;						// ¤Ø¤o¸ê°T: T±çÁlªO¼e in
 	double h;							// ¤Ø¤o¸ê°T: ±ç²` in
 	double hf;							// ¤Ø¤o¸ê°T: ª©«p in
 	double ln;							// ¤Ø¤o¸ê°T: ±ç¸ó in
@@ -152,13 +152,79 @@ struct RcData {
 	// string ForceMultLength{}; string Force{}; string Length{};
 };
 
+class SVG {
+	stringstream file;
+	//data
+	double limmitOfB;
+	double limmitOfH;
+	const double enlarge = 15;
+	const double enlarge2 = 5;
+	const double Offset = 10;
+	double h;
+	double bw;
+	int MainBarCount;
+	double MainBarR;
+	double StirrupOfD;
+	double clearCover;
+	double clearcoverToCenter;
+	double centerToCenter;
+	bool ifLeaderOnTop;
+	vector<bool> MainBarDepend_H;
+	vector <bool> legs_H;
+
+	//data//hook
+	double R1;
+	double hook1;
+	double hook2;
+	double hook3;
+	//data//side
+	double Ln_side;
+	double h_side;
+	double clearcoverToCenter_side;
+	double s;
+	bool sideCase;
+	double StirrupAccount;
+	double place1st;
+public:
+	//draw
+	void rect(double x, double y, double b, double h, double rx = 0, double ry = 0);
+	void circle(double x, double y, double R);
+	void line(double x1, double y1, double x2, double y2);
+	//draw//path cerw
+	void pathHead(double x, double y);
+	void pathArc(double r1, double r2, double k, double x, double y);
+	void pathLine(double x, double y);
+	void pathZ();
+	void pathTail();
+	//translate the coordinate space
+	void transHead(double x, double y);
+	void transTail();
+	//draw//conbination
+	void Uhook(double i);
+	void leg(double x, int i);
+
+	//SVG creating
+	SVG(const struct RcData& d);
+	void SVGHead(double limX, double limY) {
+		file << "<svg width= \" " << limX << " \" height = \" " << limY << " \"> \n";
+	}
+	void SVGbeamSection();
+	void SVGbeamSide();
+	void SVGTail() {
+		file << "</svg>\n";
+	}
+	string output() {
+		return file.str();
+	}
+};
+
 // Main Zone
 void Core(RcData& Data);
 crow::json::wvalue Struct2Json(RcData& Data);
 
 // Moment Zone
 
-double Beff(double bw, double Sw, double hf, double ln, double bf, RcData::_BeamType_& BeamType);
+double Beff(double bw, double Sw, double hf, double ln, RcData::_BeamType_& BeamType);
 double Deff(int MainBar, int TorsionBar, double h, double cc);
 double MinMainBarQuantity(double bw, double deff, double fc, double fy);
 double MaxMainBarQuantity(double bw, double deff, double ReinforceRatio);

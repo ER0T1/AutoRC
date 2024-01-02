@@ -14,7 +14,7 @@ void Core(RcData& Data) {
 
 	// °Ñ¼Æ­pºâ
 
-	Data.beff = Beff(Data.bw, Data.Sw, Data.hf, Data.ln, Data.bf, Data.BeamType);
+	Data.beff = Beff(Data.bw, Data.Sw, Data.hf, Data.ln, Data.BeamType);
 	Data.deffUpper = Deff(Data.MainBar, Data.TorsionBar, Data.h, Data.cc);
 	Data.deffLower = Deff(Data.MainBar, Data.TorsionBar, Data.h, Data.cc);
 	Data.deff = min({ Data.deffUpper ,Data.deffLower });
@@ -36,10 +36,7 @@ void Core(RcData& Data) {
 	if (Data.bw < 0.3 * Data.h || Data.bw < 10) {
 		Data.Warning = RcData::_Warning_::InsufficientSectionCrossSectionalDimensionsForBw;
 	}
-	// ACI 318-19 22.5.1.2
-	if (!CrossSectionalDimensionsConfirmationForShear(Data.Vu, Data.fc, Data.vc, Data.bw, Data.deff, Data.ReductionFactors.ForShear)) {
-		Data.Warning = RcData::_Warning_::InsufficientSectionCrossSectionalDimensionsForShear;
-	}
+	
 	// ACI318-19 9.7.2.3
 	if (Data.h >= 36) {
 		Data.HasSkinBar = true;
@@ -68,7 +65,11 @@ void Core(RcData& Data) {
 		cout << Data.cc << endl;
 	}
 	else {
-
+		cout << "unfinish" << endl;
+		// ACI 318-19 22.5.1.2
+		if (!CrossSectionalDimensionsConfirmationForShear(Data.Vu, Data.fc, Data.vc, Data.bw, Data.deff, Data.ReductionFactors.ForShear)) {
+			Data.Warning = RcData::_Warning_::InsufficientSectionCrossSectionalDimensionsForShear;
+		}
 	}
 
 }

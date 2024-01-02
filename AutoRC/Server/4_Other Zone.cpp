@@ -143,66 +143,87 @@ void Coordinate(RcData& Data) {
 		else Data.Coordinate.TorsionBar_V[i] += TorsionBarSpacing;
 	}
 	// 腳水平座標
-	if (Data.leading == 2) if (Data.depend == 2) {
-		Data.Coordinate.MainBarDepend_H = { true, true };
-		if (Data.legs == 2) Data.Coordinate.legs_H = { true, true };
+	if (Data.leading == 2) {
+		if (Data.depend == 2) {
+			Data.Coordinate.MainBarDepend_H = { true, true };
+			if (Data.legs == 2) Data.Coordinate.legs_H = { true, true };
+			else cout << "Error leading == 2 depend == 2" << endl;
+		}
+		else cout << "Error leading == 2" << endl;
 	}
 	else if (Data.leading == 3) {
 		if (Data.depend == 2) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true };
 			if (Data.legs == 2) Data.Coordinate.legs_H = { true, false, true };
+			else cout << "Error leading == 3 depend == 2" << endl;
 		}
 		else if (Data.depend == 3) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true };
 			if (Data.legs == 2) Data.Coordinate.legs_H = { true, false, true };
 			else if (Data.legs == 3) Data.Coordinate.legs_H = { true, true, true };
+			else cout << "Error leading == 3 depend == 3" << endl;
 		}
+		else cout << "Error leading == 3" << endl;
 	}
-	else if (Data.leading == 4) if (Data.depend == 4) {
-		Data.Coordinate.MainBarDepend_H = { true, true, true, true };
-		if (Data.legs == 4) Data.Coordinate.legs_H = { true, true, true, true };
+	else if (Data.leading == 4) {
+		if (Data.depend == 4) {
+			Data.Coordinate.MainBarDepend_H = { true, true, true, true };
+			if (Data.legs == 4) Data.Coordinate.legs_H = { true, true, true, true };
+			else cout << "Error leading == 4 depend == 4" << endl;
+		}
+		else cout << "Error leading == 4" << endl;
 	}
 	else if (Data.leading == 5) {
 		if (Data.depend == 3) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true };
 			if (Data.legs == 3) Data.Coordinate.legs_H = { true, false, true, false, true };
+			else cout << "Error leading == 5 depend == 3" << endl;
 		}
 		else if (Data.depend == 4) {
 			Data.Coordinate.MainBarDepend_H = { true, true, false, true, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, true, false, true, true };
+			else cout << "Error leading == 5 depend == 4" << endl;
 		}
 		else if (Data.depend == 5) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true };
 			if (Data.legs == 3) Data.Coordinate.legs_H = { true, false, true, false, true };
 			else if (Data.legs == 4) Data.Coordinate.legs_H = { true, true, false, true, true };
 			else if (Data.legs == 5) Data.Coordinate.legs_H = { true, true, true, true, true };
+			else cout << "Error leading == 5 depend == 5" << endl;
 		}
+		else cout << "Error leading == 5" << endl;
 	}
 	else if (Data.leading == 6) {
 		if (Data.depend == 4) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, false, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, false, true, true, false, true };
+			else cout << "Error leading == 6 depend == 4" << endl;
 		}
 		else if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, false, true, true, false, true };
 			else if (Data.legs == 6) Data.Coordinate.legs_H = { true, true, true, true, true, true };
+			else cout << "Error leading == 6 depend == 6" << endl;
 		}
+		else cout << "Error leading == 6" << endl;
 	}
 	else if (Data.leading == 7) {
 		if (Data.depend == 4) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, false, true, false, true, false, true };
+			else cout << "Error leading == 7 depend == 4" << endl;
 		}
 		else if (Data.depend == 5) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, false, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, false, true, false, true, false, true };
 			else if (Data.legs == 5) Data.Coordinate.legs_H = { true, false, true, true, true, false, true };
+			else cout << "Error leading == 7 depend == 5" << endl;
 		}
 		else if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, false, true, true, true };
 			if (Data.legs == 4) Data.Coordinate.legs_H = { true, false, true, false, true, false, true };
 			else if (Data.legs == 6) Data.Coordinate.legs_H = { true, true, true, false, true, true, true };
+			else cout << "Error leading == 7 depend == 6" << endl;
 		}
 		else if (Data.depend == 7) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true };
@@ -210,38 +231,47 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 5) Data.Coordinate.legs_H = { true, false, true, true, true, false, true };
 			else if (Data.legs == 6) Data.Coordinate.legs_H = { true, true, true, false, true, true, true };
 			else if (Data.legs == 7) Data.Coordinate.legs_H = { true, true, true, true, true, true, true };
+			else cout << "Error leading == 7 depend == 7" << endl;
 		}
+		else cout << "Error leading == 7" << endl;
 	}
 	else if (Data.leading == 8) {
 		if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, true, false, true, true, false, true, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, true, false, true, true, false, true, true };
+			else cout << "Error leading == 8 depend == 6" << endl;
 		}
 		else if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, true, false, true, true, false, true, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 8 depend == 8" << endl;
 		}
+		else cout << "Error leading == 8" << endl;
 	}
 	else if (Data.leading == 9) {
 		if (Data.depend == 5) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, false, true};
 			if (Data.legs == 5) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true };
+			else cout << "Error leading == 9 depend == 5" << endl;
 		}
 		else if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, false, true, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, true, false, true, true, false, true };
+			else cout << "Error leading == 9 depend == 6" << endl;
 		}
 		else if (Data.depend == 7) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, false, true };
 			if (Data.legs == 5) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, true, false, true, true, false, true };
 			else if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, false, true };
+			else cout << "Error leading == 9 depend == 7" << endl;
 		}
 		else if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, false, true, true, true, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, true, false, true, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, true, true, false, true, true, true, true };
+			else cout << "Error leading == 9 depend == 8" << endl;
 		}
 		else if (Data.depend == 9) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true };
@@ -250,39 +280,48 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, true, true, false, true, true, true, true };
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 9 depend == 9" << endl;
 		}
+		else cout << "Error leading == 9" << endl;
 	}
 	else if (Data.leading == 10) {
 		if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, false, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, false, true };
+			else cout << "Error leading == 10 depend == 6" << endl;
 		}
 		else if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, false, true };
+			else cout << "Error leading == 10 depend == 8" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 10 depend == 10" << endl;
 		}
+		else cout << "Error leading == 10" << endl;
 	}
 	else if (Data.leading == 11) {
 		if (Data.depend == 6) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, false, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true };
+			else cout << "Error leading == 11 depend == 6" << endl;
 		}
 		else if (Data.depend == 7) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, true, false, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, false, true };
+			else cout << "Error leading == 11 depend == 7" << endl;
 		}
 		else if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, false, true, true, true, false, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, true, true, false, true, true, true, false, true };
+			else cout << "Error leading == 11 depend == 8" << endl;
 		}
 		else if (Data.depend == 9) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, true, true, false, true };
@@ -290,12 +329,14 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, true, true, false, true, true, true, false, true };
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, false, true };
+			else cout << "Error leading == 11 depend == 9" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, false, true, true, true, true, true };
 			if (Data.legs == 6) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, true, true, false, true, true, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, true, true, true, true, false, true, true, true, true, true };
+			else cout << "Error leading == 11 depend == 10" << endl;
 		}
 		else if (Data.depend == 11) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true, true };
@@ -305,44 +346,54 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, true, true, true, true, false, true, true, true, true, true };
 			else if (Data.legs == 11) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 11 depend == 11" << endl;
 		}
+		else cout << "Error leading == 11" << endl;
 	}
 	else if (Data.leading == 12) {
 		if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, true, false, true, false, true, true, false, true, false, true, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, false, true, false, true, true, false, true, false, true, true };
+			else cout << "Error leading == 12 depend == 8" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, true, false, true, true, true, true, true, true, false, true, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, false, true, false, true, true, false, true, false, true, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, true, false, true, true, true, true, true, true, false, true, true };
+			else cout << "Error leading == 12 depend == 10" << endl;
 		}
 		else if (Data.depend == 12) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true, true, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, true, false, true, false, true, true, false, true, false, true, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, true, false, true, true, true, true, true, true, false, true, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 12 depend == 12" << endl;
 		}
+		else cout << "Error leading == 12" << endl;
 	}
 	else if (Data.leading == 13) {
 		if (Data.depend == 7) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, false, true, false, true, false, true };
 			if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true };
+			else cout << "Error leading == 13 depend == 7" << endl;
 		}
 		else if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, false, true, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, true, false, true, false, true };
+			else cout << "Error leading == 13 depend == 8" << endl;
 		}			
 		else if (Data.depend == 9) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, true, true, true, false, true, false, true };
 			if (Data.legs == 7) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, true, false, true, false, true };
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, false, true, false, true };
+			else cout << "Error leading == 13 depend == 9" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, false, true, true, true, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, true, true, true, false, true, true, true, true, false, true };
+			else cout << "Error leading == 13 depend == 10" << endl;
 		}
 		else if (Data.depend == 11) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, true, true, true, true, false, true };
@@ -351,12 +402,14 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, true, true, true, false, true, true, true, true, false, true };
 			else if (Data.legs == 11) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, false, true };
+			else cout << "Error leading == 13 depend == 11" << endl;
 		}
 		else if (Data.depend == 12) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, false, true, true, true, true, true, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, true, false, true, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, true, true, true, false, true, true, true, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, true, true, true, true, true, false, true, true, true, true, true, true };
+			else cout << "Error leading == 13 depend == 12" << endl;
 		}
 		else if (Data.depend == 13) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true, true, true, true };
@@ -367,23 +420,28 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 11) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, true, true, true, true, true, false, true, true, true, true, true, true };
 			else if (Data.legs == 13) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 13 depend == 13" << endl;
 		}
+		else cout << "Error leading == 13" << endl;
 	}
 	else if (Data.leading == 14) {
 		if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, true, false, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, true, false, true, false, true, false, true };
+			else cout << "Error leading == 14 depend == 8" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, true, true, true, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, true, false, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, true, false, true, false, true };
+			else cout << "Error leading == 14 depend == 10" << endl;
 		}
 		else if (Data.depend == 12) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, true, true, true, true, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, true, false, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, true, false, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, true, false, true };
+			else cout << "Error leading == 14 depend == 12" << endl;
 		}
 		else if (Data.depend == 14) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
@@ -391,22 +449,27 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, true, false, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, true, false, true };
 			else if (Data.legs == 14) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 14 depend == 14" << endl;
 		}
+		else cout << "Error leading == 14" << endl;
 	}
 	else if (Data.leading == 15) {
 		if (Data.depend == 8) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, false, true, false, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true, false, true };
+			else cout << "Error leading == 15 depend == 8" << endl;
 		}
 		else if (Data.depend == 9) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, false, true, true, true, false, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, true, true, false, true, false, true, false, true };
+			else cout << "Error leading == 15 depend == 9" << endl;
 		}
 		else if (Data.depend == 10) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, true, false, true, true, true, false, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, true, true, false, true, false, true };
+			else cout << "Error leading == 15 depend == 10" << endl;
 		}
 		else if (Data.depend == 11) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, false, true, true, true, true, true, true, true, false, true, false, true };
@@ -414,12 +477,14 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 9) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, true, true, false, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, true, true, false, true, false, true };
 			else if (Data.legs == 11) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, true, true, false, true, false, true };
+			else cout << "Error leading == 15 depend == 11" << endl;
 		}
 		else if (Data.depend == 12) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, false, true, true, true, true, true, false, true };
 			if (Data.legs == 8) Data.Coordinate.legs_H = { true, false, true, false, true, false, true, false, true, false, true, false, true, false, true };
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, true, true, false, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, false, true, true, true, true, true, false, true };
+			else cout << "Error leading == 15 depend == 12" << endl;
 		}
 		else if (Data.depend == 13) {
 			Data.Coordinate.MainBarDepend_H = { true, false, true, true, true, true, true, true, true, true, true, true, true, false, true };
@@ -429,6 +494,7 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 11) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, true, true, true, true, false, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, false, true, true, true, true, true, false, true };
 			else if (Data.legs == 13) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, true, true, false, true };
+			else cout << "Error leading == 15 depend == 13" << endl;
 		}
 		else if (Data.depend == 14) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, false, true, true, true, true, true, true, true };
@@ -436,6 +502,7 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 10) Data.Coordinate.legs_H = { true, false, true, false, true, true, true, false, true, true, true, false, true, false, true };
 			else if (Data.legs == 12) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, false, true, true, true, true, true, false, true };
 			else if (Data.legs == 14) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, false, true, true, true, true, true, true, true };
+			else cout << "Error leading == 15 depend == 14" << endl;
 		}
 		else if (Data.depend == 15) {
 			Data.Coordinate.MainBarDepend_H = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
@@ -447,8 +514,11 @@ void Coordinate(RcData& Data) {
 			else if (Data.legs == 13) Data.Coordinate.legs_H = { true, false, true, true, true, true, true, true, true, true, true, true, true, false, true };
 			else if (Data.legs == 14) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, false, true, true, true, true, true, true, true };
 			else if (Data.legs == 15) Data.Coordinate.legs_H = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+			else cout << "Error leading == 15 depend == 15" << endl;
 		}
+		else cout << "Error leading == 15" << endl;
 	}
+	else cout << "Error legs horizontal coordinates" << endl;
 }
 
 void Uhook(stringstream& file, double MainBarR, double StirrupOfD, double clearcoverToCenter, double cx1, double cy1, double Offset, double R1, double hook1, double hook2, double hook3, double bw, double i) {
@@ -475,108 +545,9 @@ void leg2(stringstream& file, double x, double y, double MainBarR, double Stirru
 }
 
 string Drawing(RcData& Data) {
-	// 出圖
-	double h = Data.h * enlarge, bw = Data.bw * enlarge, limmitOfH = h + 50., limmitOfB = bw + 50.;
-	int MainBarCount = Data.leading;
-	double MainBarR = BarDiameter(Data.MainBar) / 2. * enlarge, StirrupOfD = BarDiameter(Data.Stirrup) * enlarge;
-	//需運算之值
-	double clearCover = Data.cc * enlarge, clearcoverToCenter = clearCover + MainBarR;
-	double centerToCenter = (bw - 2 * clearcoverToCenter) / (MainBarCount - 1);
-	const auto Offset = 10;
-	double s = Data.stirrupSpacing;//接上去的時候要拿掉
-	stringstream file;
-
-	file << "<svg width= \" " << limmitOfB << " \" height = \" " << limmitOfH << " \"> \n";
-	file << "<rect x = '" << Offset << "' y = '" << Offset << "' width = \" " << bw << " \" height = \" "
-		<< h << " \" style = \"fill:rgb(255, 255, 255);stroke-width:2;stroke:rgb(0,0,0)\" /> \n";
-
-	double cx1 = clearcoverToCenter, cy1 = clearcoverToCenter;
-	for (int i = 0; i < MainBarCount; i++) {
-		if (Data.leader == false && Data.Coordinate.MainBarDepend_H[i] == false) {
-			cx1 = cx1 + centerToCenter;
-			continue;
-		}
-		file << "<circle cx = \" " << cx1 + Offset << " \" cy = \" " << cy1 + Offset << " \" r = \" "
-			<< MainBarR << " \" stroke = \"black\" stroke-width = \"2\" fill = \"white\" /> \n";
-		cx1 = cx1 + centerToCenter;
-	}
-
-	double cx2 = clearcoverToCenter, cy2 = h - clearcoverToCenter;
-	for (int i = 0; i < MainBarCount; i++) {
-		if (Data.leader == true && Data.Coordinate.MainBarDepend_H[i] == false) {
-			cx2 = cx2 + centerToCenter;
-			continue;
-		}
-		file << "<circle cx = \" " << cx2 + Offset << " \" cy = \" " << cy2 + Offset << " \" r = \" "
-			<< MainBarR << " \" stroke = \"black\" stroke-width = \"2\" fill = \"white\" /> \n";
-		cx2 = cx2 + centerToCenter;
-	}
-
-
-	/*新箍筋*/
-	for (int i = 0; i <= 1; i++) {
-		file << "<rect x = \"" << clearCover + Offset - i * StirrupOfD << " \" y = \"" << clearCover + Offset - i * StirrupOfD << " \" rx = \"" << MainBarR + i * StirrupOfD << "\" ry = \" " << MainBarR + i * StirrupOfD << "\" width = \"" << bw - 2 * clearCover + i * 2 * StirrupOfD << "\" height = \" " << h - 2 * clearCover + i * 2 * StirrupOfD << "\"";
-		file << "style = \"fill:none;stroke:black;stroke-width:2;opacity:1\"/>";
-	}
-	/*箍筋細節*/
-	cx1 = clearcoverToCenter;
-	cy1 = clearcoverToCenter;
-	double R1 = StirrupOfD + MainBarR;
-	double hook1 = sqrt(R1 * R1 / 2), hook2 = sqrt(9 * enlarge * enlarge / 2), hook3 = sqrt(StirrupOfD * StirrupOfD / 2);
-
-	Uhook(file, MainBarR, StirrupOfD, clearcoverToCenter, cx1, cy1, Offset, R1, hook1, hook2, hook3, bw, 1.0);//left corner hook 1.0
-	Uhook(file, MainBarR, StirrupOfD, clearcoverToCenter, cx1, cy1, Offset, R1, hook1, hook2, hook3, bw, -1.0);//left corner hook -1.0
-	/*legs x,y in this place is the center of the mainBar which you want the legs to put on*/
-
-	leg2(file, clearcoverToCenter + Offset + 4 * centerToCenter, h / 2 + Offset, MainBarR, StirrupOfD, clearcoverToCenter, Offset, centerToCenter, R1, hook1, hook2, hook3, h, -1.);
-	leg2(file, clearcoverToCenter + Offset + 2 * centerToCenter, h / 2 + Offset, MainBarR, StirrupOfD, clearcoverToCenter, Offset, centerToCenter, R1, hook1, hook2, hook3, h, 1);
-	file << "</svg>\n";
-
-	file << "<p>" << "Main reinforcement bar " << MainBarCount << " - N0." << 8 << "</p>";
-
-	//Side view of the beam
-	double enlarge2 = 5;
-	double Ln = Data.ln * enlarge2;
-	h = h / enlarge * enlarge2;
-	clearcoverToCenter = clearcoverToCenter / enlarge * enlarge2;
-
-	//這裡還在改
-	s *= enlarge2;
-	double stirrupCount = floor(Ln / s);
-	double Place1st = (Ln - (floor(Ln / s) - 1) * s) / 2;
-	bool placing = false;
-	if (Place1st > 2 && Place1st < 1) {
-		stirrupCount = floor((Ln - 4 * enlarge2) / s);
-		Place1st = (Ln - (stirrupCount - 1) * s) / 2;
-		placing = true;
-	}
-	//這裡還在改
-
-	file << "<svg width= \" " << Ln + 50 << " \" height = \" " << h + 50 << " \"> \n";
-
-	//mainbar
-	file << "<rect x = '" << Offset << "' y = '" << Offset << "' width = \" " << Ln << " \" height = \" "
-		<< h << " \" style = \"fill:rgb(255, 255, 255);stroke-width:2;stroke:rgb(0,0,0)\" /> \n";
-	for (int i = 0; i < 2; i++) {
-		file << "<line x1=\" " << Offset << "\" y1=\" " << Offset + clearcoverToCenter + i * (h - 2 * clearcoverToCenter) << " \" x2=\" " << Offset + Ln
-			<< "\" y2=\" " << Offset + clearcoverToCenter + i * (h - 2 * clearcoverToCenter) << "\" style=\"stroke:rgb(0, 0, 0); stroke - width:2\" />";
-	}
-	//stirrup 1st one and last one
-	if (placing) {
-		for (int i = 0; i < 2; i++) {
-			file << "<line x1=\" " << Offset + 2 * enlarge2 + i * (Ln - 4 * enlarge2) << "\" y1=\" " << Offset + clearcoverToCenter
-				<< " \" x2=\" " << Offset + 2 * enlarge2 + i * (Ln - 4 * enlarge2) << "\" y2=\" " << Offset + h - clearcoverToCenter << "\" style=\"stroke:rgb(0, 0, 0); stroke - width:2\" />";
-		}
-	}
-
-	//stirrup in the middle 
-	for (int i = 0; i < stirrupCount; i++) {
-		file << "<line x1=\"" << Offset + Place1st + i * s << "\" y1=\" " << Offset + clearcoverToCenter
-			<< " \" x2=\" " << Offset + Place1st + i * s << "\" y2=\"" << Offset + h - clearcoverToCenter << "\" style=\"stroke:rgb(0, 0, 0); stroke - width:2\" />";
-	}
-
-	file << "</svg>\n";
-	file << "</html>";
-	cout << file.str() << endl;
-	return file.str();
+	SVG file(Data);
+	file.SVGbeamSection();//process
+	file.SVGbeamSide();//process
+	cout << file.output();//final sesult
+	return file.output();
 }

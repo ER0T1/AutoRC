@@ -1,4 +1,4 @@
-// v 0.23.11.09
+// v 0.24.01.02
 
 #define _WIN32_WINNT 0x0600
 #pragma warning( disable : 4267 4244 26495)
@@ -58,7 +58,6 @@ int main() {
 		auto ln = data.get("ln");
 		auto Sw = data.get("Sw");
 		auto hf = data.get("hf");
-		auto bf = data.get("bf");
 		auto BeamType = data.get("BeamType");
 		auto SDC = data.get("SDC");
 		auto cc = data.get("cc");
@@ -68,7 +67,6 @@ int main() {
 		if (ln) Data.ln = strtod(ln, NULL) * ft2in;
 		if (Sw) Data.Sw = strtod(Sw, NULL) * ft2in;
 		if (hf) Data.hf = strtod(hf, NULL);
-		if (bf) Data.bf = strtod(bf, NULL);
 		if (BeamType) {
 			auto beam_type = atoi(BeamType);
 			if (beam_type == 0) { Data.BeamType = RcData::_BeamType_::Middle; }
@@ -143,7 +141,6 @@ crow::json::wvalue Struct2Json(RcData& Data) {
 	WebData["bw"] = Data.bw;
 	WebData["hf"] = Data.hf;
 	WebData["h"] = Data.h;
-	WebData["bf"] = Data.bf;
 	WebData["ln"] = Data.ln;
 	WebData["fc"] = Data.fc;
 	WebData["Dl"] = Data.Dl;
